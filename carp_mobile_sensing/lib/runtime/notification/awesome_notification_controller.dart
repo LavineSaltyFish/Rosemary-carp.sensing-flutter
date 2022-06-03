@@ -16,30 +16,31 @@ class AwesomeNotificationController implements NotificationController {
   }
 
   /// Initialize and set up the notification controller.
-  /// ToDo: Set icon for notification channels
   @override
   Future<void> initialize() async {
     AwesomeNotifications().initialize(
       '',
       [
         NotificationChannel(
-          channelKey: 'basic_channel',
-          channelName: 'Basic Notifications',
-          channelDescription: "Basic Notifications",
-          importance: NotificationImportance.High,
-          channelShowBadge: true,
-        ),
+            channelKey: 'basic_channel',
+            channelName: 'Basic Notifications',
+            channelDescription: "Basic Notifications",
+            importance: NotificationImportance.High,
+            channelShowBadge: true,
+            icon: "../android/app/src/main/res/drawable/app_icon.png"),
         NotificationChannel(
-          channelKey: 'scheduled_channel',
-          channelName: 'Scheduled Notifications',
-          channelDescription: "Scheduled Notifications",
-          locked: true,
-          importance: NotificationImportance.High,
-          channelShowBadge: true,
-        ),
+            channelKey: 'scheduled_channel',
+            channelName: 'Scheduled Notifications',
+            channelDescription: "Scheduled Notifications",
+            locked: true,
+            importance: NotificationImportance.High,
+            channelShowBadge: true,
+            icon: "../android/app/src/main/res/drawable/app_icon.png"),
       ],
     );
     info('$runtimeType initialized.');
+
+    await requestPermision();
   }
 
   @override
@@ -74,11 +75,21 @@ class AwesomeNotificationController implements NotificationController {
   Future<void> sendNotification(UserTask task) async {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-          id: task.id.hashCode,
-          channelKey: 'basic_channel',
-          title: task.title,
-          body: task.description,
-          notificationLayout: NotificationLayout.Default),
+        id: task.id.hashCode,
+        channelKey: 'basic_channel',
+        title: task.title,
+        body: task.description,
+        notificationLayout: NotificationLayout.Default,
+      ),
     );
+  }
+
+  /// Request permision to send notifications
+  Future<void> requestPermision() async {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) async {
+      if (!isAllowed) {
+        await AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
   }
 }
