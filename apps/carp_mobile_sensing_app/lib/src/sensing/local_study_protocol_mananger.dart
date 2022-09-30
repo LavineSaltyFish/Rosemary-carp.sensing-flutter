@@ -18,22 +18,22 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
   @override
   Future<SmartphoneStudyProtocol> getStudyProtocol(String protocolId) async {
     SmartphoneStudyProtocol protocol = SmartphoneStudyProtocol(
-      ownerId: 'abc@dtu.dk',
+      ownerId: 's210365@dtu.dk',
       name: protocolId,
     );
 
     protocol.protocolDescription = StudyDescription(
-        title: 'CAMS App - Sensing Coverage Study',
+        title: 'Nævis- Navigator from Next Level',
         description:
             'The default study testing coverage of most measures. Used in the coverage tests.',
         purpose: 'To test sensing coverage',
         responsible: StudyResponsible(
-          id: 'abc',
-          title: 'professor',
-          address: 'Ørsteds Plads',
+          id: 's210365',
+          title: 'student',
+          address: 'Skovbrynet',
           affiliation: 'Technical University of Denmark',
-          email: 'abc@dtu.dk',
-          name: 'Alex B. Christensen',
+          email: '210365@dtu.dk',
+          name: 'Sixian Zuo',
         ));
 
     protocol.dataEndPoint = (bloc.deploymentMode == DeploymentMode.LOCAL)
