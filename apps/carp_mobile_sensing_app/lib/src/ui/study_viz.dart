@@ -26,6 +26,61 @@ class StudyDeploymentPageState extends State<StudyDeploymentPage> {
     BuildContext context,
     StudyDeploymentModel studyDeploymentModel,
   ) {
+    return BuildSettings.buildIOS ? _buildIOSView() : _buildAndroidView();
+  }
+
+  Widget _buildIOSView() {
+    return CupertinoPageScaffold(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          CupertinoSliverNavigationBar(
+            leading: Icon(CupertinoIcons.person_2),
+            // This title is visible in both collapsed and expanded states.
+            // When the "middle" parameter is omitted, the widget provided
+            // in the "largeTitle" parameter is used instead in the collapsed state.
+            largeTitle: Text('Contacts'),
+            trailing: Icon(CupertinoIcons.add_circled),
+
+//             expandedHeight: _appBarHeight,
+//             pinned: true,
+//             floating: false,
+//             snap: false,
+//             actions: <Widget>[
+//               IconButton(
+//                 icon: Icon(
+//                   Theme.of(context).platform == TargetPlatform.iOS
+//                       ? Icons.more_horiz
+//                       : Icons.more_vert,
+//                 ),
+//                 tooltip: 'Settings',
+//                 onPressed: _showSettings,
+//               ),
+//             ],
+//             flexibleSpace: FlexibleSpaceBar(
+//               title: Text(studyDeploymentModel.title),
+//               background: Stack(
+//                 fit: StackFit.expand,
+//                 children: <Widget>[
+//                   studyDeploymentModel.image,
+// //                  Image.asset(
+// //                    bloc.study.image,
+// //                    fit: BoxFit.cover,
+// //                    height: _appBarHeight,
+// //                  ),
+//                 ],
+//               ),
+//             ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+                _buildStudyPanel(context, studyDeploymentModel)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAndroidView() {
     return Scaffold(
       key: _scaffoldKey,
       body: CustomScrollView(
@@ -237,12 +292,15 @@ class _MeasureLine extends StatelessWidget {
         .add(Text(measure.toString(), style: themeData.textTheme.caption));
 
     final List<Widget> rowChildren = [];
-    rowChildren.add(SizedBox(
-        width: 72.0,
-        child: IconButton(
-          icon: icon,
-          onPressed: null,
-        )));
+    Widget button = BuildSettings.buildIOS
+        ? CupertinoButton(child: icon, onPressed: null)
+        : IconButton(icon: icon, onPressed: null);
+    rowChildren.add(SizedBox(width: 72.0, child: button));
+
+    // rowChildren.add(SizedBox(
+    //     width: 72.0,
+    //     child: IconButtonCustomized(
+    //     )));
 
     rowChildren.addAll([
       Expanded(

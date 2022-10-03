@@ -32,6 +32,7 @@ dependencies:
   # carp_movisens_package: ^0.32.0
 
   research_package: ^0.9.3
+  cupertino_list_tile: ^0.2.1
 
 # Overriding carp libraries to use the local copy
 dependency_overrides:

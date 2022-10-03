@@ -19,6 +19,10 @@ class ProbeListState extends State<ProbesList> {
         tiles: bloc.runningProbes
             .map<Widget>((probe) => _buildProbeListTile(context, probe)));
 
+    return BuildSettings.buildIOS ? _buildIOSView(probes) : _buildAndroidView(probes);
+  }
+
+  Widget _buildAndroidView(Iterable<Widget> probes) {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -45,25 +49,55 @@ class ProbeListState extends State<ProbesList> {
     );
   }
 
+  Widget _buildIOSView(Iterable<Widget> probes) {
+    return CupertinoPageScaffold(
+      key: scaffoldKey,
+      navigationBar: CupertinoNavigationBar(
+        middle: Text('Probes'),
+      ),
+      child: CupertinoScrollbar(
+        child: ListView(
+          padding: EdgeInsets.symmetric(vertical: 8.0),
+          children: probes.toList(),
+        ),
+      ),
+    );
+  }
+
   Widget _buildProbeListTile(BuildContext context, ProbeModel probe) {
     return StreamBuilder<ExecutorState>(
       stream: probe.stateEvents,
       initialData: ExecutorState.created,
       builder: (context, AsyncSnapshot<ExecutorState> snapshot) {
         if (snapshot.hasData) {
-          return ListTile(
-            isThreeLine: true,
-            leading: probe.icon,
-            title: Text(probe.name),
-            subtitle: Text(probe.description),
-//            subtitle: Text(probe.measure.toString()),
-            trailing: probe.stateIcon,
-          );
+          return BuildSettings.buildIOS ? _buildIOSTile(probe) : _buildAndroidTile(probe);
         } else if (snapshot.hasError) {
           return Text('Error in probe state - ${snapshot.error}');
         }
         return Text('Unknown');
       },
+    );
+  }
+
+  Widget _buildAndroidTile(ProbeModel probe) {
+    return ListTile(
+      isThreeLine: true,
+      leading: probe.icon,
+      title: Text(probe.name),
+      subtitle: Text(probe.description),
+//            subtitle: Text(probe.measure.toString()),
+      trailing: probe.stateIcon,
+    );
+  }
+
+  Widget _buildIOSTile(ProbeModel probe) {
+    return CupertinoListTile(
+      isThreeLine: true,
+      leading: probe.icon,
+      title: Text(probe.name),
+      subtitle: Text(probe.description),
+//            subtitle: Text(probe.measure.toString()),
+      trailing: probe.stateIcon,
     );
   }
 

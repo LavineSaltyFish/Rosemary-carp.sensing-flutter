@@ -1,6 +1,8 @@
 library mobile_sensing_app;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide TimeOfDay;
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,7 +26,11 @@ import 'package:carp_webservices/carp_auth/carp_auth.dart';
 import 'package:carp_webservices/carp_services/carp_services.dart';
 import 'package:carp_backend/carp_backend.dart';
 
+import 'package:cupertino_list_tile/cupertino_list_tile.dart';
+
 part 'src/app.dart';
+part 'src/app_ios.dart';
+part 'src/build_settings.dart';
 part 'src/sensing/sensing.dart';
 part 'src/models/probe_model.dart';
 part 'src/models/device_model.dart';
@@ -37,6 +43,7 @@ part 'src/ui/probe_list.dart';
 part 'src/ui/device_list.dart';
 part 'src/ui/study_viz.dart';
 part 'src/ui/cachet.dart';
+part 'src/widgets/customized_buttons.dart';
 
 void main() async {
   // makes sure to have an instance of the WidgetsBinding, which is required
@@ -54,5 +61,5 @@ void main() async {
     resumeSensingOnStartup: false,
   );
 
-  runApp(App());
+  runApp(BuildSettings.buildIOS ? App_IOS() : App());
 }
