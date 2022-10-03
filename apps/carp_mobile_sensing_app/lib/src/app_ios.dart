@@ -94,46 +94,10 @@ class CarpMobileSensingAppState_IOS extends State<CarpMobileSensingApp_IOS> {
         return CupertinoTabView(
           builder: (BuildContext context) {
             return _pages[index];
-            // return CupertinoPageScaffold(
-            //   navigationBar: CupertinoNavigationBar(
-            //     middle: Text('Page 1 of tab $index'),
-            //   ),
-            //   child: Center(
-            //     child: CupertinoButton(
-            //       child: const Text('Next page'),
-            //       onPressed: () {
-            //         Navigator.of(context).push(
-            //           CupertinoPageRoute<void>(
-            //             builder: (BuildContext context) {
-            //               return CupertinoPageScaffold(
-            //                 navigationBar: CupertinoNavigationBar(
-            //                   middle: Text('Page 2 of tab $index'),
-            //                 ),
-            //                 child: Center(
-            //                   child: CupertinoButton(
-            //                     child: const Text('Back'),
-            //                     onPressed: () {
-            //                       Navigator.of(context).pop();
-            //                     },
-            //                   ),
-            //                 ),
-            //               );
-            //             },
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // );
           },
         );
       },
     );
-    // floatingActionButton: FloatingActionButton(
-    //   onPressed: restart,
-    //   tooltip: 'Restart study & probes',
-    //   child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
-    // ),
   }
 
   void _onItemTapped(int index) {

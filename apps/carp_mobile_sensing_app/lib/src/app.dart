@@ -66,7 +66,8 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
     StudyDeploymentPage(),
     ProbesList(),
     // DataVisualization(),
-    DevicesList(),
+    // DevicesList(),
+    MapsDemo(),
   ];
 
   @override
