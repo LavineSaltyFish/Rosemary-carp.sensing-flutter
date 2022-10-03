@@ -34,6 +34,8 @@ dependencies:
   research_package: ^0.9.3
   cupertino_list_tile: ^0.2.1
   google_maps_flutter: ^2.2.1
+  location: ^4.4.0
+  carp_background_location: ^3.0.1
 
 # Overriding carp libraries to use the local copy
 dependency_overrides:

@@ -139,6 +139,12 @@ class Sensing {
     // Listening on the data stream and print them as json to the debug console
     controller?.data.listen((data) => print(toJsonString(data)));
 
+    // Acquire Data
+    // print("sensing data: ");
+    // controller?.data
+    //     .where((dataPoint) => dataPoint.data!.format.toString() == DeviceSamplingPackage.BATTERY)
+    //     .listen((event) => print(event));
+
     info('$runtimeType initialized');
   }
 }
