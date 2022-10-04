@@ -42,5 +42,18 @@ class MapsDemoState extends State<MapsDemo> {
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+
+    Sensing().controller?.data
+        .where((dataPoint) => dataPoint.data!.format.toString() == ContextSamplingPackage.LOCATION)
+        .listen((event) => _onLocationAcquired(event));
+  }
+
+  void _onLocationAcquired(DataPoint data) {
+    print("MAN Location information acquired!");
+
+    var locationDataDict = data.carpBody;
+    final latitude = locationDataDict!["latitude"] as double;
+
+    print(latitude);
   }
 }
