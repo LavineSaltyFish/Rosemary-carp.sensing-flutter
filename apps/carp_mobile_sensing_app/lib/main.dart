@@ -28,6 +28,7 @@ import 'package:carp_backend/carp_backend.dart';
 
 import 'package:cupertino_list_tile/cupertino_list_tile.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:rosemary_maps/rosemary_maps.dart';
 
 part 'src/app.dart';
 part 'src/app_ios.dart';
@@ -45,6 +46,7 @@ part 'src/ui/device_list.dart';
 part 'src/ui/study_viz.dart';
 part 'src/ui/cachet.dart';
 part 'src/ui/maps_demo.dart';
+part 'src/ui/google_maps_page.dart';
 part 'src/widgets/customized_buttons.dart';
 
 void main() async {

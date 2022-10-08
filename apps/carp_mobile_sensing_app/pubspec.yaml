@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.10.0
   # font_awesome_flutter: ^10.1.0
+  rosemary_maps:
+    path: ./lib/rosemary_maps
   
   carp_serializable: ^1.0.0
   #carp_core: ^0.30.0      # the core CARP domain model
@@ -33,9 +35,8 @@ dependencies:
 
   research_package: ^0.9.3
   cupertino_list_tile: ^0.2.1
-  google_maps_flutter: ^2.2.1
-  location: ^4.4.0
   carp_background_location: ^3.0.1
+  google_maps_flutter: ^2.2.1
 
 # Overriding carp libraries to use the local copy
 dependency_overrides:
