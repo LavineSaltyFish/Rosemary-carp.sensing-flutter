@@ -63,11 +63,12 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
   int _selectedIndex = 0;
 
   final _pages = [
-    StudyDeploymentPage(),
-    ProbesList(),
+    NavigatePage(),
+    //StudyDeploymentPage(),
+    //ProbesList(),
     // DataVisualization(),
     // DevicesList(),
-    MapsDemo(),
+    //TestPage(),
   ];
 
   @override
@@ -80,16 +81,16 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Study'),
-          BottomNavigationBarItem(icon: Icon(Icons.adb), label: 'Probes'),
-          // BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Data'),
-          BottomNavigationBarItem(icon: Icon(Icons.watch), label: 'Devices'),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Study'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.adb), label: 'Probes'),
+      //     // BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Data'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.watch), label: 'Devices'),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   onTap: _onItemTapped,
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: restart,
         tooltip: 'Restart study & probes',
@@ -97,6 +98,9 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
       ),
     );
   }
+  static ValueNotifier<double> _speed = ValueNotifier<double>(0.0);
+  static ValueNotifier<double> _latitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.latitude);
+  static ValueNotifier<double> _longitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.longitude);
 
   void _onItemTapped(int index) {
     setState(() {
@@ -110,7 +114,27 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
         bloc.pause();
       } else {
         bloc.resume();
+        Sensing().controller?.data.listen((dataPoint) => _onHeartRateAcquired(dataPoint));
+        // Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == ContextSamplingPackage.LOCATION)
+        //     .listen((dataPoint) => _onLocationUpdated(dataPoint));
       }
     });
   }
+  void _onLocationUpdated(DataPoint data) async {
+    var dataDict = data.carpBody;
+    _latitude.value = dataDict!["location"] as double;
+    _longitude.value = dataDict!["location"] as double;
+  }
+
+  void _onHeartRateAcquired(DataPoint data) async {
+    var dataDict = data.carpBody;
+    _speed.value = dataDict!["speed"] as double;
+    //return dataDict!["speed"] as double;
+
+    //print(_notify.value);
+    // !["POLAR_HR"] as double;
+    // _notify.value = text;
+  }
+
+
 }
