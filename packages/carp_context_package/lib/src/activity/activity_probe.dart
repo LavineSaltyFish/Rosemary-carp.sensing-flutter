@@ -20,11 +20,13 @@ class ActivityProbe extends StreamProbe {
   @override
   Future<bool> onResume() async {
     // check permission to access the AR on Android
-    final status = await Permission.activityRecognition.status;
+    // final status = await Permission.activityRecognition.status;
+    final status = await Permission.sensors.status;
     if (!status.isGranted) {
       warning(
-          '$runtimeType - permission not granted to use to activity recognition: $status - trying to request it');
-      await Permission.activityRecognition.request();
+          // '$runtimeType - permission not granted to use to activity recognition: $status - trying to request it');
+          '$runtimeType - permission not granted to use to sensors: $status - trying to request it');
+      await Permission.sensors.request();
     }
 
     return super.onResume();

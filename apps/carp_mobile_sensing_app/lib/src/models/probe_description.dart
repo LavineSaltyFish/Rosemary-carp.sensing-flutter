@@ -39,34 +39,34 @@ class ProbeDescription {
           'Light',
           'Measures ambient light in lux on a regular basis.',
         ),
-        ConnectivitySamplingPackage.BLUETOOTH: ProbeDescriptor(
-          'Bluetooth',
-          'Collecting nearby bluetooth devices on a regular basis.',
-        ),
-        ConnectivitySamplingPackage.WIFI: ProbeDescriptor(
-          'Wifi',
-          'Collecting names of connected wifi networks (SSID and BSSID)',
-        ),
-        ConnectivitySamplingPackage.CONNECTIVITY: ProbeDescriptor(
-          'Connectivity',
-          'Collecting information on connectivity status and mode.',
-        ),
-        MediaSamplingPackage.AUDIO: ProbeDescriptor(
-          'Audio',
-          'Records ambient sound on a regular basis.',
-        ),
-        MediaSamplingPackage.NOISE: ProbeDescriptor(
-          'Noise',
-          'Measures noise level in decibel on a regular basis.',
-        ),
-        AppsSamplingPackage.APPS: ProbeDescriptor(
-          'Apps',
-          'Collecting a list of installed apps.',
-        ),
-        AppsSamplingPackage.APP_USAGE: ProbeDescriptor(
-          'App Usage',
-          'Collects app usage statistics.',
-        ),
+        // ConnectivitySamplingPackage.BLUETOOTH: ProbeDescriptor(
+        //   'Bluetooth',
+        //   'Collecting nearby bluetooth devices on a regular basis.',
+        // ),
+        // ConnectivitySamplingPackage.WIFI: ProbeDescriptor(
+        //   'Wifi',
+        //   'Collecting names of connected wifi networks (SSID and BSSID)',
+        // ),
+        // ConnectivitySamplingPackage.CONNECTIVITY: ProbeDescriptor(
+        //   'Connectivity',
+        //   'Collecting information on connectivity status and mode.',
+        // ),
+        // MediaSamplingPackage.AUDIO: ProbeDescriptor(
+        //   'Audio',
+        //   'Records ambient sound on a regular basis.',
+        // ),
+        // MediaSamplingPackage.NOISE: ProbeDescriptor(
+        //   'Noise',
+        //   'Measures noise level in decibel on a regular basis.',
+        // ),
+        // AppsSamplingPackage.APPS: ProbeDescriptor(
+        //   'Apps',
+        //   'Collecting a list of installed apps.',
+        // ),
+        // AppsSamplingPackage.APP_USAGE: ProbeDescriptor(
+        //   'App Usage',
+        //   'Collects app usage statistics.',
+        // ),
         // CommunicationSamplingPackage.TEXT_MESSAGE_LOG: ProbeDescriptor(
         //   'Text Messages',
         //   'Collects the SMS message log.',
@@ -115,14 +115,14 @@ class ProbeDescription {
           'Mobility',
           'Mobility features calculated from location data.',
         ),
-        ESenseSamplingPackage.ESENSE_BUTTON: ProbeDescriptor(
-          'eSense Button',
-          'eSense button events.',
-        ),
-        ESenseSamplingPackage.ESENSE_SENSOR: ProbeDescriptor(
-          'eSense Movement',
-          'eSense IMU sensor events.',
-        ),
+        // ESenseSamplingPackage.ESENSE_BUTTON: ProbeDescriptor(
+        //   'eSense Button',
+        //   'eSense button events.',
+        // ),
+        // ESenseSamplingPackage.ESENSE_SENSOR: ProbeDescriptor(
+        //   'eSense Movement',
+        //   'eSense IMU sensor events.',
+        // ),
         PolarSamplingPackage.POLAR_ACCELEROMETER: ProbeDescriptor(
           'Polar Accelerometer',
           'Polar IMU sensor events.',
@@ -170,20 +170,20 @@ class ProbeDescription {
             Icon(Icons.adb, size: 50, color: CACHET.GREY_4),
         SensorSamplingPackage.LIGHT:
             Icon(Icons.highlight, size: 50, color: CACHET.YELLOW),
-        ConnectivitySamplingPackage.BLUETOOTH:
-            Icon(Icons.bluetooth_searching, size: 50, color: CACHET.DARK_BLUE),
-        ConnectivitySamplingPackage.WIFI:
-            Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
-        ConnectivitySamplingPackage.CONNECTIVITY:
-            Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
-        MediaSamplingPackage.AUDIO:
-            Icon(Icons.mic, size: 50, color: CACHET.ORANGE),
-        MediaSamplingPackage.NOISE:
-            Icon(Icons.hearing, size: 50, color: CACHET.YELLOW),
-        AppsSamplingPackage.APPS:
-            Icon(Icons.apps, size: 50, color: CACHET.LIGHT_GREEN),
-        AppsSamplingPackage.APP_USAGE:
-            Icon(Icons.get_app, size: 50, color: CACHET.LIGHT_GREEN),
+        // ConnectivitySamplingPackage.BLUETOOTH:
+        //     Icon(Icons.bluetooth_searching, size: 50, color: CACHET.DARK_BLUE),
+        // ConnectivitySamplingPackage.WIFI:
+        //     Icon(Icons.wifi, size: 50, color: CACHET.LIGHT_PURPLE),
+        // ConnectivitySamplingPackage.CONNECTIVITY:
+        //     Icon(Icons.cast_connected, size: 50, color: CACHET.GREEN),
+        // MediaSamplingPackage.AUDIO:
+        //     Icon(Icons.mic, size: 50, color: CACHET.ORANGE),
+        // MediaSamplingPackage.NOISE:
+        //     Icon(Icons.hearing, size: 50, color: CACHET.YELLOW),
+        // AppsSamplingPackage.APPS:
+        //     Icon(Icons.apps, size: 50, color: CACHET.LIGHT_GREEN),
+        // AppsSamplingPackage.APP_USAGE:
+        //     Icon(Icons.get_app, size: 50, color: CACHET.LIGHT_GREEN),
         // CommunicationSamplingPackage.TEXT_MESSAGE_LOG:
         //     Icon(Icons.textsms, size: 50, color: CACHET.LIGHT_PURPLE),
         // CommunicationSamplingPackage.TEXT_MESSAGE:
@@ -208,10 +208,10 @@ class ProbeDescription {
             Icon(Icons.location_on, size: 50, color: CACHET.CYAN),
         ContextSamplingPackage.MOBILITY:
             Icon(Icons.location_on, size: 50, color: CACHET.ORANGE),
-        ESenseSamplingPackage.ESENSE_BUTTON: Icon(Icons.radio_button_checked,
-            size: 50, color: CACHET.LIGHT_PURPLE),
-        ESenseSamplingPackage.ESENSE_SENSOR:
-            Icon(Icons.headset, size: 50, color: CACHET.LIGHT_PURPLE),
+        // ESenseSamplingPackage.ESENSE_BUTTON: Icon(Icons.radio_button_checked,
+        //     size: 50, color: CACHET.LIGHT_PURPLE),
+        // ESenseSamplingPackage.ESENSE_SENSOR:
+        //     Icon(Icons.headset, size: 50, color: CACHET.LIGHT_PURPLE),
         PolarSamplingPackage.POLAR_ACCELEROMETER:
             Icon(Icons.moving, size: 50, color: CACHET.LIGHT_PURPLE),
         PolarSamplingPackage.POLAR_GYROSCOPE:

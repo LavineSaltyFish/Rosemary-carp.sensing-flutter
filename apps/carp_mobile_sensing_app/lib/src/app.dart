@@ -32,6 +32,7 @@ class LoadingPage extends StatelessWidget {
       }
     }
     await Sensing().initialize();
+    LocationManager().initialize();
 
     return true;
   }
@@ -63,10 +64,15 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
   int _selectedIndex = 0;
 
   final _pages = [
-    StudyDeploymentPage(),
-    ProbesList(),
+    NavigatePage(),
+    MapScreen()
+    //SimpleMarkerAnimationExample()
+    //StudyDeploymentPage(),
+    //ProbesList(),
     // DataVisualization(),
-    DevicesList(),
+    // DevicesList(),
+    //TestPage(),
+
   ];
 
   @override
@@ -84,7 +90,7 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Study'),
           BottomNavigationBarItem(icon: Icon(Icons.adb), label: 'Probes'),
           // BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Data'),
-          BottomNavigationBarItem(icon: Icon(Icons.watch), label: 'Devices'),
+          //BottomNavigationBarItem(icon: Icon(Icons.watch), label: 'Devices'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -96,12 +102,22 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
       ),
     );
   }
+  static ValueNotifier<double> _speed = ValueNotifier<double>(0.0);
+  static ValueNotifier<double> _gyro = ValueNotifier<double>(0.0);
+  static ValueNotifier<double> _heartRate = ValueNotifier<double>(0.0);
+
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      //Sensing().controller?.data.listen((dataPoint) => _onMapRebuild(dataPoint));
     });
   }
+
+
+  
+  static ValueNotifier<double> _latitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.latitude);
+  static ValueNotifier<double> _longitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.longitude);
 
   void restart() {
     setState(() {
@@ -109,7 +125,62 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
         bloc.pause();
       } else {
         bloc.resume();
+
+
+        Sensing().controller?.data.listen((dataPoint) => _onSpeedAcquired(dataPoint));
+        Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == PolarSamplingPackage.POLAR_HR)
+            .listen((dataPoint) => _onHeartRateAcquired(dataPoint));
+
+        // Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == SensorSamplingPackage.GYROSCOPE)
+        //     .listen((dataPoint) => _onGyroAcquired(dataPoint));
+        // Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == ContextSamplingPackage.LOCATION)
+        //     .listen((dataPoint) => _onLocationUpdated(dataPoint));
+
+
       }
     });
   }
+
+  // void onData(DataPoint dataPoint) {
+  //   _onSpeedAcquired(dataPoint);
+  // }
+
+  //
+  // Future<CameraPosition> _onMapRebuild(DataPoint data) async {
+  //   var dataDict = data.carpBody;
+  //   CameraPosition _kGooglePlex = CameraPosition(
+  //          target: LatLng(dataDict!["latitude"] as double, dataDict!["longitude"] as double),
+  //          zoom: 14.4746,
+  //          );
+  //   return _kGooglePlex;
+  // }
+  //
+
+  void _onSpeedAcquired(DataPoint data) async {
+    var dataDict = data.carpBody;
+    _speed.value = dataDict!["speed"] as double;
+  }
+
+  // void _onGyroAcquired(DataPoint data) async {
+  //   var dataDict = data.carpBody;
+  //   _gyro.value = dataDict!["gyroscope"] as double;
+  // }
+
+  // void _onLocationUpdated(DataPoint data) async {
+  //   var dataDict = data.carpBody;
+  //   _latitude.value = dataDict!["latitude"] as double;
+  //   _longitude.value = dataDict!["longitude"] as double;
+  // }
+
+  void _onHeartRateAcquired(DataPoint data) async {
+    var dataDict = data.carpBody;
+    _heartRate.value = dataDict!["POLAR_HR"] as double;
+    //return dataDict!["speed"] as double;
+
+    //print(_notify.value);
+    // !["POLAR_HR"] as double;
+    // _notify.value = text;
+  }
+
+
 }

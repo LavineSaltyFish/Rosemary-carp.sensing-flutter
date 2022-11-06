@@ -48,13 +48,13 @@ class Sensing {
     CarpMobileSensing();
 
     // Create and register external sampling packages
-    SamplingPackageRegistry().register(ConnectivitySamplingPackage());
+    // SamplingPackageRegistry().register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
-    SamplingPackageRegistry().register(MediaSamplingPackage());
+    // SamplingPackageRegistry().register(MediaSamplingPackage());
     // SamplingPackageRegistry().register(CommunicationSamplingPackage());
-    SamplingPackageRegistry().register(AppsSamplingPackage());
+    // SamplingPackageRegistry().register(AppsSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
-    SamplingPackageRegistry().register(ESenseSamplingPackage());
+    // SamplingPackageRegistry().register(ESenseSamplingPackage());
   }
 
   /// Initialize and set up sensing.
@@ -138,6 +138,12 @@ class Sensing {
 
     // Listening on the data stream and print them as json to the debug console
     controller?.data.listen((data) => print(toJsonString(data)));
+
+    // Acquire Data
+    // print("sensing data: ");
+    // controller?.data
+    //     .where((dataPoint) => dataPoint.data!.format.toString() == DeviceSamplingPackage.BATTERY)
+    //     .listen((event) => print(event));
 
     info('$runtimeType initialized');
   }
