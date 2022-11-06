@@ -10,13 +10,13 @@ import 'dart:async';
 import 'package:carp_serializable/carp_serializable.dart';
 import 'package:carp_core/carp_core.dart';
 import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
-import 'package:carp_connectivity_package/connectivity.dart';
-import 'package:carp_esense_package/esense.dart';
+// import 'package:carp_connectivity_package/connectivity.dart';
+// import 'package:carp_esense_package/esense.dart';
 import 'package:carp_polar_package/carp_polar_package.dart';
 import 'package:carp_context_package/carp_context_package.dart';
-import 'package:carp_audio_package/media.dart';
+// import 'package:carp_audio_package/media.dart';
 // import 'package:carp_communication_package/communication.dart';
-import 'package:carp_apps_package/apps.dart';
+// import 'package:carp_apps_package/apps.dart';
 // import 'package:movisens_flutter/movisens_flutter.dart';
 // import 'package:carp_movisens_package/movisens.dart';
 // import 'package:carp_health_package/health_package.dart';
@@ -30,6 +30,11 @@ import 'package:cupertino_list_tile/cupertino_list_tile.dart';
 // import 'package:google_maps/google_maps_geometry.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:flutter_animarker/flutter_map_marker_animation.dart';
+import 'package:rosemary_maps/rosemary_maps.dart';
+
+
+
 
 part 'src/app.dart';
 part 'src/app_ios.dart';
@@ -48,7 +53,9 @@ part 'src/ui/study_viz.dart';
 part 'src/ui/cachet.dart';
 part 'src/ui/maps_demo.dart';
 part 'src/ui/navigator.dart';
+part "src/ui/google_maps_page_2.dart";
 part 'src/widgets/customized_buttons.dart';
+part 'src/ui/background_locator.dart';
 
 void main() async {
   // makes sure to have an instance of the WidgetsBinding, which is required

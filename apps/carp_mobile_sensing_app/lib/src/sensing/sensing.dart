@@ -48,13 +48,13 @@ class Sensing {
     CarpMobileSensing();
 
     // Create and register external sampling packages
-    SamplingPackageRegistry().register(ConnectivitySamplingPackage());
+    // SamplingPackageRegistry().register(ConnectivitySamplingPackage());
     SamplingPackageRegistry().register(ContextSamplingPackage());
-    SamplingPackageRegistry().register(MediaSamplingPackage());
+    // SamplingPackageRegistry().register(MediaSamplingPackage());
     // SamplingPackageRegistry().register(CommunicationSamplingPackage());
-    SamplingPackageRegistry().register(AppsSamplingPackage());
+    // SamplingPackageRegistry().register(AppsSamplingPackage());
     SamplingPackageRegistry().register(PolarSamplingPackage());
-    SamplingPackageRegistry().register(ESenseSamplingPackage());
+    // SamplingPackageRegistry().register(ESenseSamplingPackage());
   }
 
   /// Initialize and set up sensing.

@@ -17,15 +17,17 @@ class _NavigatePageState extends State<NavigatePage> {
   // final scaffoldKey = GlobalKey<ScaffoldState>();
   //SystemChrome.setEnabledSystemUIOverlays([]);
   Completer<GoogleMapController> _controller = Completer();
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-  static LatLng sourceLocation = _kGooglePlex.target;
-  static LatLng destinationLocation = _kGooglePlex.target;
 
   static List<LatLng> polylineCoordinates = [];
 
+  static const markerDuration = Duration(seconds: 1);
+  static const markerkLocations = [
+    kStartPosition,
+    LatLng(18.488101, -69.957995),
+    LatLng(18.489210, -69.952459),
+    LatLng(18.487307, -69.952759),
+    LatLng(18.487308, -69.952759),
+  ];
   //final ValueNotifier<double> _speed = CarpMobileSensingAppState._speed
 
 
@@ -34,6 +36,26 @@ class _NavigatePageState extends State<NavigatePage> {
   //     target: LatLng(37.43296265331129, -122.08832357078792),
   //     tilt: 59.440717697143555,
   //     zoom: 19.151926040649414);
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  // }
+  // void _onMapInit(DataPoint data) async {
+  //   var dataDict = data.carpBody;
+  //   CameraPosition _kGooglePlex = CameraPosition(
+  //     target: LatLng(dataDict!["latitude"] as double, dataDict!["longitude"] as double),
+  //     zoom: 14.4746,
+  //   );
+  //
+  // }
+
+   static final CameraPosition _kGooglePlex = CameraPosition(
+           target: LatLng(37.43296265331129, -122.08832357078792),
+           zoom: 14.4746,
+         );
+  static LatLng sourceLocation = _kGooglePlex.target;
+  static LatLng destinationLocation = _kGooglePlex.target;
 
 
   void getPolyPoints() async{
@@ -71,14 +93,14 @@ class _NavigatePageState extends State<NavigatePage> {
                   child :  GoogleMap(
                   mapType: MapType.hybrid,
                   initialCameraPosition: _kGooglePlex,
-                  // markers: {
-                  //   Marker(
-                  //     markerId: MarkerId("source"),
-                  //     position: sourceLocation),
-                  //   Marker(
-                  //       markerId: MarkerId("destination"),
-                  //       position: destinationLocation)
-                  // },
+                  markers: {
+                    Marker(
+                      markerId: MarkerId("source"),
+                      position: sourceLocation),
+                    Marker(
+                        markerId: MarkerId("destination"),
+                        position: destinationLocation)
+                  },
                   // polylines: {
                   //   Polyline(
                   //       polylineId: PolylineId("route"),
@@ -88,6 +110,7 @@ class _NavigatePageState extends State<NavigatePage> {
                   //   )
                   // },
                   onMapCreated: (GoogleMapController controller) {
+
                     _controller.complete(controller);}
                   ),
                 ),
@@ -124,17 +147,32 @@ class _NavigatePageState extends State<NavigatePage> {
                     //                         ),
                   ),
                   child: Center(
-                    child: Text(
-                      'speed',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Color(0xFFFBFAF8),
-                          fontSize: 40
-                      ),
-                    ),
+                          child:Container(
+                              width:MediaQuery.of(context).size.width * 0.25,
+                              //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
+                              height: MediaQuery.of(context).size.height * 0.10,
+                              decoration: BoxDecoration(
+                                color: Color(0x353938).withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(15),
+                                //                         border: Border.all(
+                                //                           color: Color(353938).withOpacity(0.5),
+                                //                           width: 5,
+                                //                         ),
+                              ),
+                              child: Center(
+                                  child: ValueListenableBuilder(
+                                      valueListenable: CarpMobileSensingAppState._speed,
+                                      builder: (context, double value, child) {
+                                        return Text(
+                                            value.toString(),
+                                            style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
+                                            textAlign: TextAlign.center);}
+                                  )
+                              )
+                          ))
                   )
               ),
-              ),
+
               Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -186,7 +224,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                   ),
                                   child: Center(
                                       child: ValueListenableBuilder(
-                                          valueListenable: CarpMobileSensingAppState._speed,
+                                          valueListenable: CarpMobileSensingAppState._gyro,
                                           builder: (context, double value, child) {
                                             return Text(
                                                 value.toString(),
@@ -215,10 +253,10 @@ class _NavigatePageState extends State<NavigatePage> {
                                   ),
                                   child: Center(
                                       child: ValueListenableBuilder(
-                                          valueListenable: CarpMobileSensingAppState._speed,
-                                          builder: (context, double value, child) {
+                                          valueListenable: LocationManager()._curLocationNotify,
+                                          builder: (context, LatLng value, child) {
                                             return Text(
-                                                value.toString(),
+                                                value.latitude.toString(),
                                                 style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
                                                 textAlign: TextAlign.center);}
                                       )

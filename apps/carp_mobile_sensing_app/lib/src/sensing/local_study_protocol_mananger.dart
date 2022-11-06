@@ -57,6 +57,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           ..addMeasures([
             Measure(type: SensorSamplingPackage.PEDOMETER),
             Measure(type: SensorSamplingPackage.LIGHT),
+            //Measure(type: SensorSamplingPackage.GYROSCOPE),
             Measure(type: DeviceSamplingPackage.SCREEN),
             Measure(type: DeviceSamplingPackage.MEMORY),
             Measure(type: DeviceSamplingPackage.BATTERY),
@@ -87,17 +88,18 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     protocol.addConnectedDevice(locationService);
 
     // Add a background task that collects location on a regular basis
-    protocol.addTriggeredTask(
-        IntervalTrigger(period: Duration(minutes: 5)),
-        BackgroundTask()
-          ..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
-        locationService);
+    // protocol.addTriggeredTask(
+    //     IntervalTrigger(period: Duration(minutes: 5)),
+    //     BackgroundTask()
+    //       ..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
+    //     locationService);
 
     // Add a background task that continously collects geolocation and mobility
     protocol.addTriggeredTask(
         ImmediateTrigger(),
         BackgroundTask()
           ..addMeasure(Measure(type: ContextSamplingPackage.GEOLOCATION))
+          ..addMeasure(Measure(type: ContextSamplingPackage.LOCATION))
           ..addMeasure(Measure(type: ContextSamplingPackage.MOBILITY)),
         locationService);
 
@@ -125,20 +127,20 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
           ..addMeasure(Measure(type: ContextSamplingPackage.AIR_QUALITY)),
         airQualityService);
 
-    protocol.addTriggeredTask(
-        ImmediateTrigger(),
-        BackgroundTask()..addMeasure(Measure(type: MediaSamplingPackage.NOISE)),
-        phone);
-
-    protocol.addTriggeredTask(
-        ImmediateTrigger(),
-        BackgroundTask()
-          ..addMeasures([
-            Measure(type: ConnectivitySamplingPackage.CONNECTIVITY),
-            Measure(type: ConnectivitySamplingPackage.WIFI),
-            Measure(type: ConnectivitySamplingPackage.BLUETOOTH),
-          ]),
-        phone);
+    // protocol.addTriggeredTask(
+    //     ImmediateTrigger(),
+    //     BackgroundTask()..addMeasure(Measure(type: MediaSamplingPackage.NOISE)),
+    //     phone);
+    //
+    // protocol.addTriggeredTask(
+    //     ImmediateTrigger(),
+    //     BackgroundTask()
+    //       ..addMeasures([
+    //         Measure(type: ConnectivitySamplingPackage.CONNECTIVITY),
+    //         Measure(type: ConnectivitySamplingPackage.WIFI),
+    //         Measure(type: ConnectivitySamplingPackage.BLUETOOTH),
+    //       ]),
+    //     phone);
 
     // // Add an automatic task that collects SMS messages in/out
     // protocol.addTriggeredTask(
