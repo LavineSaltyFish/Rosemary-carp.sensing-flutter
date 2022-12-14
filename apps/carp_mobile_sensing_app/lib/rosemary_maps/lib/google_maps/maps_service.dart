@@ -5,11 +5,10 @@ import 'maps_data_model.dart';
 
 abstract class MapService<T extends MapsDataModel> {
   final String baseUrl;
-  Map<String, dynamic> queryParameters = {};
+  late Map<String, dynamic> queryParameters;
 
   final Dio _dio = Dio();
-  MapService(String baseUrl) :
-        this.baseUrl = baseUrl;
+  MapService(this.baseUrl);
 
   void setQueryParams();
   T? processResponseData(dynamic data);
@@ -20,13 +19,13 @@ abstract class MapService<T extends MapsDataModel> {
     // data is nullable
     final data = await getResponse();
 
-    return processResponseData(data);
+    return data == null? processResponseData(data) : null;
   }
 
   Future<dynamic> getResponse() async {
     final response = await _dio.get(
       baseUrl,
-      queryParameters: this.queryParameters,
+      queryParameters: queryParameters,
     );
 
     // Check if response is successful

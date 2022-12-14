@@ -39,7 +39,8 @@ dependencies:
 #  research_package: ^0.9.3
   cupertino_list_tile: ^0.2.1
   google_maps_flutter: ^2.2.1
-  location: ^4.4.0
+  # location: ^4.4.0
+  geolocator: ^9.0.2
   # carp_background_location: ^3.0.1
 
   auto_size_text: 3.0.0

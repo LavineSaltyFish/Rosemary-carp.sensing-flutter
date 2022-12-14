@@ -47,7 +47,7 @@ class DirectionModel extends MapsDataModel {
     return DirectionModel(
       bounds: bounds,
       polylinePoints:
-      PolylinePoints().decodePolyline(data['overview_polyline']['points'].toString()),
+        PolylinePoints().decodePolyline(data['overview_polyline']['points'].toString()),
       totalDistance: distance,
       totalDuration: duration,
     );

@@ -36,9 +36,6 @@ class DirectionService extends MapService<DirectionModel> {
 
   @override
   DirectionModel? processResponseData(dynamic data) {
-    print("data:");
-    print(data == null);
-
     return (data != null) ? DirectionModel.fromMap(data as Map<String, dynamic>) : null;
   }
 }
