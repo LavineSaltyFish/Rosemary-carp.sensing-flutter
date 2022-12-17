@@ -51,7 +51,8 @@ class _NavigatePageState extends State<NavigatePage> {
   // }
 
    static final CameraPosition _kGooglePlex = CameraPosition(
-           target: LatLng(37.43296265331129, -122.08832357078792),
+           target: //LatLng(37.773972, -122.431297),
+              LocationManager()._curLocationNotify.value,
            zoom: 14.4746,
          );
   static LatLng sourceLocation = _kGooglePlex.target;
@@ -75,6 +76,7 @@ class _NavigatePageState extends State<NavigatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: null,
       //key: scaffoldKey,
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
@@ -93,6 +95,7 @@ class _NavigatePageState extends State<NavigatePage> {
                   child :  GoogleMap(
                   mapType: MapType.hybrid,
                   initialCameraPosition: _kGooglePlex,
+                  myLocationEnabled: true,
                   markers: {
                     Marker(
                       markerId: MarkerId("source"),
@@ -133,24 +136,14 @@ class _NavigatePageState extends State<NavigatePage> {
               //   padding: EdgeInsets.zero,
               // ),
               //
+
+              // Timer line
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                child:Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.10,
-                  decoration: BoxDecoration(
-                    color: Color(0x353938).withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(15),
-                    //                         border: Border.all(
-                    //                           color: Color(353938).withOpacity(0.5),
-                    //                           width: 5,
-                    //                         ),
-                  ),
-                  child: Center(
-                          child:Container(
-                              width:MediaQuery.of(context).size.width * 0.25,
+                child: Container(
+                              //width:MediaQuery.of(context).size.width * 0.25,
                               //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
-                              height: MediaQuery.of(context).size.height * 0.10,
+                              height: MediaQuery.of(context).size.height * 0.08,
                               decoration: BoxDecoration(
                                 color: Color(0x353938).withOpacity(0.5),
                                 borderRadius: BorderRadius.circular(15),
@@ -161,18 +154,19 @@ class _NavigatePageState extends State<NavigatePage> {
                               ),
                               child: Center(
                                   child: ValueListenableBuilder(
-                                      valueListenable: CarpMobileSensingAppState._speed,
+                                      valueListenable: CarpMobileSensingAppState._time,
                                       builder: (context, double value, child) {
                                         return Text(
-                                            value.toString(),
+                                            value.toStringAsFixed(2) +" s",
                                             style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
                                             textAlign: TextAlign.center);}
                                   )
                               )
-                          ))
-                  )
-              ),
+                          )),
 
+
+
+              // Row 1: _speed, _heartRate, _gradient
               Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -184,7 +178,7 @@ class _NavigatePageState extends State<NavigatePage> {
                               child:Container(
                                   width:MediaQuery.of(context).size.width * 0.25,
                                   //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
-                                  height: MediaQuery.of(context).size.height * 0.10,
+                                  height: MediaQuery.of(context).size.height * 0.08,
                                   decoration: BoxDecoration(
                                     color: Color(0x353938).withOpacity(0.5),
                                     borderRadius: BorderRadius.circular(15),
@@ -193,12 +187,13 @@ class _NavigatePageState extends State<NavigatePage> {
                                     //                           width: 5,
                                     //                         ),
                                   ),
+                                  //child: Text('0.0')
                                   child: Center(
                                       child: ValueListenableBuilder(
                                           valueListenable: CarpMobileSensingAppState._speed,
                                           builder: (context, double value, child) {
                                             return Text(
-                                                value.toString(),
+                                                value.toStringAsFixed(2) +" km/h",
                                                 style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
                                                 textAlign: TextAlign.center);}
                                       )
@@ -213,7 +208,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                   child:Container(
                                   width:MediaQuery.of(context).size.width * 0.25,
                                   //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
-                                  height: MediaQuery.of(context).size.height * 0.10,
+                                  height: MediaQuery.of(context).size.height * 0.08,
                                   decoration: BoxDecoration(
                                     color: Color(0x353938).withOpacity(0.5),
                                     borderRadius: BorderRadius.circular(15),
@@ -224,10 +219,10 @@ class _NavigatePageState extends State<NavigatePage> {
                                   ),
                                   child: Center(
                                       child: ValueListenableBuilder(
-                                          valueListenable: CarpMobileSensingAppState._gyro,
-                                          builder: (context, double value, child) {
+                                          valueListenable: CarpMobileSensingAppState._heartRate,
+                                          builder: (context, int value, child) {
                                             return Text(
-                                                value.toString(),
+                                                value.toString() + " BPM",
                                                 style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
                                                 textAlign: TextAlign.center);}
                                       )
@@ -242,7 +237,7 @@ class _NavigatePageState extends State<NavigatePage> {
                               child:Container(
                                   width:MediaQuery.of(context).size.width * 0.25 - 10,
                                   //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
-                                  height: MediaQuery.of(context).size.height * 0.10,
+                                  height: MediaQuery.of(context).size.height * 0.08,
                                   decoration: BoxDecoration(
                                     color: Color(0x353938).withOpacity(0.5),
                                     borderRadius: BorderRadius.circular(15),
@@ -256,7 +251,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                           valueListenable: LocationManager()._curLocationNotify,
                                           builder: (context, LatLng value, child) {
                                             return Text(
-                                                value.latitude.toString(),
+                                                value.latitude.toStringAsFixed(2),
                                                 style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
                                                 textAlign: TextAlign.center);}
                                       )
@@ -285,7 +280,73 @@ class _NavigatePageState extends State<NavigatePage> {
                       //   ),
                       // )
                     ]
-                )
+                ),
+
+              // Row 2: _weather, _windSpeed
+              Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Flexible(
+                        fit: FlexFit.tight,
+                        child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 0),
+                            child:Container(
+                                //width:MediaQuery.of(context).size.width * 0.25,
+                                //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
+                                height: MediaQuery.of(context).size.height * 0.08,
+                                decoration: BoxDecoration(
+                                  color: Color(0x353938).withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(15),
+                                  //                         border: Border.all(
+                                  //                           color: Color(353938).withOpacity(0.5),
+                                  //                           width: 5,
+                                  //                         ),
+                                ),
+                                //child: Text('0.0')
+                                child: Center(
+                                    child: ValueListenableBuilder(
+                                        valueListenable: CarpMobileSensingAppState._weather,
+                                        builder: (context, String value, child) {
+                                          return Text(
+                                              value,
+                                              style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
+                                              textAlign: TextAlign.center);}
+                                    )
+                                )
+                            ))
+                    ),
+
+                    Flexible(
+                        fit: FlexFit.tight,
+                        child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            child:Container(
+                                //width:MediaQuery.of(context).size.width * 0.25,
+                                //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
+                                height: MediaQuery.of(context).size.height * 0.08,
+                                decoration: BoxDecoration(
+                                  color: Color(0x353938).withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(15),
+                                  //                         border: Border.all(
+                                  //                           color: Color(353938).withOpacity(0.5),
+                                  //                           width: 5,
+                                  //                         ),
+                                ),
+                                child: Center(
+                                    child: ValueListenableBuilder(
+                                        valueListenable: CarpMobileSensingAppState._windSpeed,
+                                        builder: (context, double value, child) {
+                                          return Text(
+                                              value.toStringAsFixed(2)+" km/h",
+                                              style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
+                                              textAlign: TextAlign.center);}
+                                    )
+                                )
+                            ))
+                    ),
+                  ]
+              )
 
 
             ]

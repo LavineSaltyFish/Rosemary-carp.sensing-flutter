@@ -77,31 +77,43 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         phone);
 
     // activity measure using the phone
-    protocol.addTriggeredTask(
-        ImmediateTrigger(),
-        BackgroundTask()
-          ..addMeasure(Measure(type: ContextSamplingPackage.ACTIVITY)),
-        phone);
+    // protocol.addTriggeredTask(
+    //     ImmediateTrigger(),
+    //     BackgroundTask()
+    //       ..addMeasure(Measure(type: ContextSamplingPackage.ACTIVITY)),
+    //     phone);
 
     // Define the online location service and add it as a 'device'
-    LocationService locationService = LocationService();
-    protocol.addConnectedDevice(locationService);
+    // LocationService locationService = LocationService();
+    // protocol.addConnectedDevice(locationService);
+
+    LocationService running_locationService = LocationService(
+        accuracy: GeolocationAccuracy.high,
+        distance: 5,
+        interval: const Duration(seconds: 1)
+    );;
+
+    protocol.addConnectedDevice(running_locationService);
+
 
     // Add a background task that collects location on a regular basis
     // protocol.addTriggeredTask(
-    //     IntervalTrigger(period: Duration(minutes: 5)),
+    //     IntervalTrigger(period: Duration(seconds: 1)),
     //     BackgroundTask()
-    //       ..addMeasure(Measure(type: ContextSamplingPackage.LOCATION)),
+    //       //..addMeasure(Measure(type: ContextSamplingPackage.LOCATION))
+    //       ..addMeasure(Measure(type: ContextSamplingPackage.GEOLOCATION)),
     //     locationService);
 
-    // Add a background task that continously collects geolocation and mobility
+    //Add a background task that continously collects geolocation and mobility
     protocol.addTriggeredTask(
+        //IntervalTrigger(period: Duration(seconds: 1)),
+        //PeriodicTrigger(period: Duration(seconds: 1), duration: Duration(microseconds: 10)),
         ImmediateTrigger(),
         BackgroundTask()
+          //..addMeasure(Measure(type: ContextSamplingPackage.LOCATION))
           ..addMeasure(Measure(type: ContextSamplingPackage.GEOLOCATION))
-          ..addMeasure(Measure(type: ContextSamplingPackage.LOCATION))
           ..addMeasure(Measure(type: ContextSamplingPackage.MOBILITY)),
-        locationService);
+        running_locationService);
 
     // Define the online weather service and add it as a 'device'
     WeatherService weatherService =
@@ -110,10 +122,17 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
     // Add a background task that collects weather every 30 miutes.
     protocol.addTriggeredTask(
-        IntervalTrigger(period: Duration(minutes: 30)),
+        ImmediateTrigger(),
+        //IntervalTrigger(period: Duration(minutes: 1)),
         BackgroundTask()
           ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
         weatherService);
+
+    // protocol.addTriggeredTask(
+    //     ImmediateTrigger(),
+    //     BackgroundTask()
+    //       ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
+    //     weatherService);
 
     // Define the online air quality service and add it as a 'device'
     AirQualityService airQualityService =
@@ -121,11 +140,11 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     protocol.addConnectedDevice(airQualityService);
 
     // Add a background task that air quality every 30 miutes.
-    protocol.addTriggeredTask(
-        IntervalTrigger(period: Duration(minutes: 30)),
-        BackgroundTask()
-          ..addMeasure(Measure(type: ContextSamplingPackage.AIR_QUALITY)),
-        airQualityService);
+    // protocol.addTriggeredTask(
+    //     IntervalTrigger(period: Duration(minutes: 30)),
+    //     BackgroundTask()
+    //       ..addMeasure(Measure(type: ContextSamplingPackage.AIR_QUALITY)),
+    //     airQualityService);
 
     // protocol.addTriggeredTask(
     //     ImmediateTrigger(),
@@ -201,10 +220,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
 
     // define the Polar device and add its measures
     PolarDevice polar = PolarDevice(
-      identifier: 'B5FC172F',
-      name: 'Polar H10',
-      polarDeviceType: PolarDeviceType.H10,
-      roleName: 'polar-h10-device',
+      identifier: 'B36C7724',
+      name: 'Polar Verity',
+      polarDeviceType: PolarDeviceType.PVS,
+      roleName: 'polar-PVS-device',
     );
     // PolarDevice polar = PolarDevice(
     //   identifier: 'B36B5B21',
@@ -216,12 +235,12 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     protocol.addConnectedDevice(polar);
 
     protocol.addTriggeredTask(
+        //IntervalTrigger(period: Duration(seconds: 5)),
         ImmediateTrigger(),
         BackgroundTask()
-          ..addMeasure(Measure(type: PolarSamplingPackage.POLAR_HR))
-          ..addMeasure(Measure(type: PolarSamplingPackage.POLAR_ECG))
-          ..addMeasure(Measure(type: PolarSamplingPackage.POLAR_PPG))
-          ..addMeasure(Measure(type: PolarSamplingPackage.POLAR_PPI)),
+          ..addMeasure(Measure(type: PolarSamplingPackage.POLAR_HR)),
+          //..addMeasure(Measure(type: PolarSamplingPackage.POLAR_ACCELEROMETER)),
+
         polar);
 
     // // add a measure for ECG monitoring using the Movisens device
