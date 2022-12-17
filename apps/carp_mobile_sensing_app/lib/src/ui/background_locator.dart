@@ -15,7 +15,7 @@ class LocationManager {
   void onUpdate(DataPoint data) {
     var dataDict = data.carpBody;
     _curLocationNotify.value = LatLng(
-        dataDict!["latitude"] as double, dataDict!["longitude"] as double);
+        dataDict!["latitude"]as double, dataDict!["longitude"] as double);
   }
 
   void initialize() {

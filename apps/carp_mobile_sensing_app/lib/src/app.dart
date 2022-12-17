@@ -103,9 +103,16 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
     );
   }
   static ValueNotifier<double> _speed = ValueNotifier<double>(0.0);
+  static ValueNotifier<double> _time = ValueNotifier<double>(0.0);
   static ValueNotifier<double> _gyro = ValueNotifier<double>(0.0);
-  static ValueNotifier<double> _heartRate = ValueNotifier<double>(0.0);
+  static ValueNotifier<int> _heartRate = ValueNotifier<int>(0);
+  //static ValueNotifier<double> _heartRate = ValueNotifier<double>(0.0);
 
+  static ValueNotifier<String> _weather = ValueNotifier<String>("-");
+  static ValueNotifier<double> _windSpeed = ValueNotifier<double>(0.0);
+
+  static ValueNotifier<double> _latitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.latitude);
+  static ValueNotifier<double> _longitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.longitude);
 
   void _onItemTapped(int index) {
     setState(() {
@@ -116,8 +123,6 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
 
 
   
-  static ValueNotifier<double> _latitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.latitude);
-  static ValueNotifier<double> _longitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.longitude);
 
   void restart() {
     setState(() {
@@ -127,9 +132,16 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
         bloc.resume();
 
 
-        Sensing().controller?.data.listen((dataPoint) => _onSpeedAcquired(dataPoint));
+        //Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == SensorSamplingPackage.ACCELEROMETER).
+        Sensing().controller?.data
+        //.where((dataPoint) => dataPoint.data!.format.toString() == ContextSamplingPackage.LOCATION)
+        .listen((dataPoint) => _onMoveAcquired(dataPoint));
+
         Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == PolarSamplingPackage.POLAR_HR)
             .listen((dataPoint) => _onHeartRateAcquired(dataPoint));
+
+        Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == ContextSamplingPackage.WEATHER)
+            .listen((dataPoint) => _onWeatherAcquired(dataPoint));
 
         // Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == SensorSamplingPackage.GYROSCOPE)
         //     .listen((dataPoint) => _onGyroAcquired(dataPoint));
@@ -156,30 +168,23 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
   // }
   //
 
-  void _onSpeedAcquired(DataPoint data) async {
+  void _onMoveAcquired(DataPoint data) async {
     var dataDict = data.carpBody;
     _speed.value = dataDict!["speed"] as double;
+    _time.value = dataDict!["distance_travelled"] as double;
   }
 
-  // void _onGyroAcquired(DataPoint data) async {
-  //   var dataDict = data.carpBody;
-  //   _gyro.value = dataDict!["gyroscope"] as double;
-  // }
-
-  // void _onLocationUpdated(DataPoint data) async {
-  //   var dataDict = data.carpBody;
-  //   _latitude.value = dataDict!["latitude"] as double;
-  //   _longitude.value = dataDict!["longitude"] as double;
-  // }
+  void _onWeatherAcquired(DataPoint data) async {
+    var dataDict = data.carpBody;
+    _weather.value = dataDict!["weather_main"] as String;
+    _windSpeed.value = dataDict!["wind_speed"] as double;
+  }
 
   void _onHeartRateAcquired(DataPoint data) async {
     var dataDict = data.carpBody;
-    _heartRate.value = dataDict!["POLAR_HR"] as double;
-    //return dataDict!["speed"] as double;
+    _heartRate.value = dataDict!["hr"] as int;
 
-    //print(_notify.value);
-    // !["POLAR_HR"] as double;
-    // _notify.value = text;
+
   }
 
 
