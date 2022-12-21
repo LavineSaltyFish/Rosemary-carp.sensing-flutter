@@ -33,9 +33,6 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_animarker/flutter_map_marker_animation.dart';
 import 'package:rosemary_maps/rosemary_maps.dart';
 
-
-
-
 part 'src/app.dart';
 part 'src/app_ios.dart';
 part 'src/build_settings.dart';

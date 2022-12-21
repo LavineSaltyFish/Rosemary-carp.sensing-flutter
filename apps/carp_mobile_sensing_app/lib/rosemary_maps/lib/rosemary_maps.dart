@@ -10,6 +10,8 @@ export 'google_maps/maps_service.dart';
 export 'google_maps/maps_data_model.dart';
 export 'google_maps/direction_service.dart';
 export 'google_maps/direction_model.dart';
+export 'google_maps/location_service.dart';
+export 'google_maps/location_model.dart';
 
 // part 'google_maps/maps_service.dart';
 // part 'google_maps/maps_data_model.dart';

@@ -26,16 +26,14 @@ class DirectionService extends MapService<DirectionModel> {
   @override
   void setQueryParams() {
     queryParameters = {
-      'origin': '${origin_latlng.latitude},${origin_latlng.longitude}',
-      'destination': '${destination_latlng.latitude},${destination_latlng.longitude}',
+      'origin': '${origin_latlng!.latitude},${origin_latlng!.longitude}',
+      'destination': '${destination_latlng!.latitude},${destination_latlng!.longitude}',
       'key': GoogleMaps.googleAPIKey,
     };
-
-    print(queryParameters);
   }
 
   @override
   DirectionModel? processResponseData(dynamic data) {
-    return (data != null) ? DirectionModel.fromMap(data as Map<String, dynamic>) : null;
+    return (data == null) ? null : DirectionModel.fromMap(data as Map<String, dynamic>);
   }
 }

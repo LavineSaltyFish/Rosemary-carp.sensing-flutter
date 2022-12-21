@@ -10,16 +10,14 @@ abstract class MapService<T extends MapsDataModel> {
   final Dio _dio = Dio();
   MapService(this.baseUrl);
 
+
+  // null safety required for these two members
   void setQueryParams();
   T? processResponseData(dynamic data);
 
   Future<T?> run() async {
     setQueryParams();
-
-    // data is nullable
-    final data = await getResponse();
-
-    return data == null? processResponseData(data) : null;
+    return processResponseData(await getResponse());
   }
 
   Future<dynamic> getResponse() async {
@@ -29,8 +27,8 @@ abstract class MapService<T extends MapsDataModel> {
     );
 
     // Check if response is successful
-    // return (response.statusCode == 200) ? response.data : null;
-    return response.data;
+    return (response.statusCode == 200) ? response.data : null;
+    // return response.data;
   }
 }
 
