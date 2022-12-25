@@ -14,6 +14,9 @@ import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 // import 'package:carp_esense_package/esense.dart';
 import 'package:carp_polar_package/carp_polar_package.dart';
 import 'package:carp_context_package/carp_context_package.dart';
+import 'package:carp_survey_package/survey.dart';
+// import 'package:research_package/research_package.dart';
+
 // import 'package:carp_audio_package/media.dart';
 // import 'package:carp_communication_package/communication.dart';
 // import 'package:carp_apps_package/apps.dart';
@@ -56,7 +59,8 @@ part 'src/ui/navigator.dart';
 part "src/ui/google_maps_page_2.dart";
 part 'src/widgets/customized_buttons.dart';
 part 'src/ui/background_locator.dart';
-
+part 'src/ui/personal_info.dart';
+part 'src/ui/personal_info_survey.dart';
 void main() async {
   // makes sure to have an instance of the WidgetsBinding, which is required
   // to use platform channels to call native code
