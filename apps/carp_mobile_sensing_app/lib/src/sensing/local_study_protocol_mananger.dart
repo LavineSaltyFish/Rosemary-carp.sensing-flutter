@@ -90,11 +90,10 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     LocationService running_locationService = LocationService(
         accuracy: GeolocationAccuracy.high,
         distance: 5,
-        interval: const Duration(seconds: 1)
-    );;
+        interval: const Duration(seconds: 1));
+    ;
 
     protocol.addConnectedDevice(running_locationService);
-
 
     // Add a background task that collects location on a regular basis
     // protocol.addTriggeredTask(
@@ -127,6 +126,30 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         BackgroundTask()
           ..addMeasure(Measure(type: ContextSamplingPackage.WEATHER)),
         weatherService);
+    //
+    // protocol.addTriggeredTask(
+    //     ImmediateTrigger(),
+    //   // add a WHO-5 survey as an app task
+    //   // plus collect device and ambient light information when survey is done
+
+      // protocol.addTriggeredTask(
+      //     ImmediateTrigger(),
+      //     RPAppTask(
+      //         type: SurveyUserTask.SURVEY_TYPE,
+      //         name: 'WHO-5 Survey',
+      //         rpTask: personalSurveyTask)
+      //       ..measures.add(Measure(type: DeviceSamplingPackage.DEVICE))
+      //       ..measures.add(Measure(type: SensorSamplingPackage.LIGHT)),
+      //     phone);
+
+        // RPAppTask(
+        //     type: SurveyUserTask.SURVEY_TYPE,
+        //     name: "Personal Information Survey",
+        //     rpTask: linearSurveyTask),
+        //   // ..addMeasures([
+        //   //   Measure(type: ContextSamplingPackage.GEOLOCATION),
+        //   // ]),
+        // phone);
 
     // protocol.addTriggeredTask(
     //     ImmediateTrigger(),
@@ -135,9 +158,9 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     //     weatherService);
 
     // Define the online air quality service and add it as a 'device'
-    AirQualityService airQualityService =
-        AirQualityService(apiKey: '9e538456b2b85c92647d8b65090e29f957638c77');
-    protocol.addConnectedDevice(airQualityService);
+    // AirQualityService airQualityService =
+    //     AirQualityService(apiKey: '9e538456b2b85c92647d8b65090e29f957638c77');
+    // protocol.addConnectedDevice(airQualityService);
 
     // Add a background task that air quality every 30 miutes.
     // protocol.addTriggeredTask(
@@ -222,7 +245,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
     PolarDevice polar = PolarDevice(
       identifier: 'B36C7724',
       name: 'Polar Verity',
-      polarDeviceType: PolarDeviceType.PVS,
+      polarDeviceType: PolarDeviceType.SENSE,
       roleName: 'polar-PVS-device',
     );
     // PolarDevice polar = PolarDevice(
@@ -239,7 +262,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         ImmediateTrigger(),
         BackgroundTask()
           ..addMeasure(Measure(type: PolarSamplingPackage.POLAR_HR)),
-          //..addMeasure(Measure(type: PolarSamplingPackage.POLAR_ACCELEROMETER)),
+        //..addMeasure(Measure(type: PolarSamplingPackage.POLAR_ACCELEROMETER)),
 
         polar);
 

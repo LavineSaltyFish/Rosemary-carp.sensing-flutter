@@ -65,7 +65,8 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
 
   final _pages = [
     NavigatePage(),
-    MapScreen()
+    PersonalInfoPage()
+    //PersonalInfoSurvey()
     //SimpleMarkerAnimationExample()
     //StudyDeploymentPage(),
     //ProbesList(),
