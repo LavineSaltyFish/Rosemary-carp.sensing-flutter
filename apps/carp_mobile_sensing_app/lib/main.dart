@@ -15,7 +15,7 @@ import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_polar_package/carp_polar_package.dart';
 import 'package:carp_context_package/carp_context_package.dart';
 import 'package:carp_survey_package/survey.dart';
-// import 'package:research_package/research_package.dart';
+import 'package:research_package/research_package.dart';
 
 // import 'package:carp_audio_package/media.dart';
 // import 'package:carp_communication_package/communication.dart';

@@ -36,6 +36,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
+                              // title
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 0, 0),
@@ -47,9 +48,11 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                       fontWeight: FontWeight.w500),
                                 ),
                               ),
+
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
+                                  // profile
                                   Align(
                                     alignment: AlignmentDirectional(0, -0.2),
                                     child: Padding(
@@ -63,6 +66,8 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                       ),
                                     ),
                                   ),
+
+                                  //personal info list
                                   Align(
                                     alignment: AlignmentDirectional(0, 0),
                                     child: Padding(
@@ -75,12 +80,13 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
+                                          //gender
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 10, 10),
+                                                    .fromSTEB(0, 10, 0, 10),
                                                 child: Image.network(
                                                   'https://picsum.photos/seed/956/600',
                                                   width: 40,
@@ -88,24 +94,63 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              Text(
-                                                'Hello World',
-                                                // style: FlutterFlowTheme
-                                                //     .of(context)
-                                                //     .bodyText1
-                                                //     .override(
-                                                //   fontFamily: 'Poppins',
-                                                //   fontSize: 18,
-                                                // ),
-                                              ),
+                                              Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 10),
+                                                  child: Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.4,
+                                                      //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.06,
+                                                      decoration: BoxDecoration(
+                                                        color: Color(0x353938)
+                                                            .withOpacity(0.5),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        //                         border: Border.all(
+                                                        //                           color: Color(353938).withOpacity(0.5),
+                                                        //                           width: 5,
+                                                        //                         ),
+                                                      ),
+                                                      child: Center(
+                                                          child:
+                                                              ValueListenableBuilder(
+                                                                  valueListenable:
+                                                                      PersonalInfoSurvey
+                                                                          ._gender,
+                                                                  builder: (context,
+                                                                      String
+                                                                          value,
+                                                                      child) {
+                                                                    return Text(
+                                                                        value,
+                                                                        style: TextStyle(
+                                                                            color: Colors
+                                                                                .white,
+                                                                            fontSize:
+                                                                                19,
+                                                                            fontWeight: FontWeight
+                                                                                .w500),
+                                                                        textAlign:
+                                                                            TextAlign.center);
+                                                                  }))))
                                             ],
                                           ),
+                                          // age
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 10, 10),
+                                                    .fromSTEB(0, 10, 0, 10),
                                                 child: Image.network(
                                                   'https://picsum.photos/seed/956/600',
                                                   width: 40,
@@ -113,24 +158,64 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              Text(
-                                                'Hello World',
-                                                // style: FlutterFlowTheme
-                                                //     .of(context)
-                                                //     .bodyText1
-                                                //     .override(
-                                                //   fontFamily: 'Poppins',
-                                                //   fontSize: 18,
-                                                // ),
-                                              ),
+                                              Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 10),
+                                                  child: Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.4,
+                                                      //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.06,
+                                                      decoration: BoxDecoration(
+                                                        color: Color(0x353938)
+                                                            .withOpacity(0.5),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        //                         border: Border.all(
+                                                        //                           color: Color(353938).withOpacity(0.5),
+                                                        //                           width: 5,
+                                                        //                         ),
+                                                      ),
+                                                      child: Center(
+                                                          child:
+                                                              ValueListenableBuilder(
+                                                                  valueListenable:
+                                                                      PersonalInfoSurvey
+                                                                          ._age,
+                                                                  builder: (context,
+                                                                      String
+                                                                          value,
+                                                                      child) {
+                                                                    return Text(
+                                                                        value,
+                                                                        style: TextStyle(
+                                                                            color: Colors
+                                                                                .white,
+                                                                            fontSize:
+                                                                                19,
+                                                                            fontWeight: FontWeight
+                                                                                .w500),
+                                                                        textAlign:
+                                                                            TextAlign.center);
+                                                                  }))))
                                             ],
                                           ),
+
+                                          //height
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 10, 10),
+                                                    .fromSTEB(0, 10, 0, 10),
                                                 child: Image.network(
                                                   'https://picsum.photos/seed/956/600',
                                                   width: 40,
@@ -138,24 +223,63 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              Text(
-                                                'Hello World',
-                                                // style: FlutterFlowTheme
-                                                //     .of(context)
-                                                //     .bodyText1
-                                                //     .override(
-                                                //   fontFamily: 'Poppins',
-                                                //   fontSize: 18,
-                                                // ),
-                                              ),
+                                              Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 10),
+                                                  child: Container(
+                                                      width:
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                          0.4,
+                                                      //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
+                                                      height:
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                          0.06,
+                                                      decoration: BoxDecoration(
+                                                        color: Color(0x353938)
+                                                            .withOpacity(0.5),
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(15),
+                                                        //                         border: Border.all(
+                                                        //                           color: Color(353938).withOpacity(0.5),
+                                                        //                           width: 5,
+                                                        //                         ),
+                                                      ),
+                                                      child: Center(
+                                                          child:
+                                                          ValueListenableBuilder(
+                                                              valueListenable:
+                                                              PersonalInfoSurvey
+                                                                  ._height,
+                                                              builder: (context,
+                                                                  String
+                                                                  value,
+                                                                  child) {
+                                                                return Text(
+                                                                    value +' cm',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                        19,
+                                                                        fontWeight: FontWeight
+                                                                            .w500),
+                                                                    textAlign:
+                                                                    TextAlign.center);
+                                                              }))))
                                             ],
                                           ),
+                                          //weight
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 10, 10),
+                                                    .fromSTEB(0, 10, 0, 10),
                                                 child: Image.network(
                                                   'https://picsum.photos/seed/956/600',
                                                   width: 40,
@@ -163,16 +287,54 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              Text(
-                                                'Hello World',
-                                                // style: FlutterFlowTheme
-                                                //     .of(context)
-                                                //     .bodyText1
-                                                //     .override(
-                                                //   fontFamily: 'Poppins',
-                                                //   fontSize: 18,
-                                                // ),
-                                              ),
+                                              Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 10),
+                                                  child: Container(
+                                                      width:
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                          0.4,
+                                                      //constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height * 0.33),
+                                                      height:
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                          0.06,
+                                                      decoration: BoxDecoration(
+                                                        color: Color(0x353938)
+                                                            .withOpacity(0.5),
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(15),
+                                                        //                         border: Border.all(
+                                                        //                           color: Color(353938).withOpacity(0.5),
+                                                        //                           width: 5,
+                                                        //                         ),
+                                                      ),
+                                                      child: Center(
+                                                          child:
+                                                          ValueListenableBuilder(
+                                                              valueListenable:
+                                                              PersonalInfoSurvey
+                                                                  ._weight,
+                                                              builder: (context,
+                                                                  String
+                                                                  value,
+                                                                  child) {
+                                                                return Text(
+                                                                    value + ' kg',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                        19,
+                                                                        fontWeight: FontWeight
+                                                                            .w500),
+                                                                    textAlign:
+                                                                    TextAlign.center);
+                                                              }))))
                                             ],
                                           ),
                                         ],
@@ -185,9 +347,12 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0, 20, 0, 20),
                                 child: TextButton(
-                                  child:Text("Edit"),
+                                  child: Text("EDIT"),
                                   onPressed: () {
-                                    // PersonalSurvey().onstart();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const PersonalInfoSurvey()),
+                                    );
                                   },
 
                                   // options: FFButtonOptions(
