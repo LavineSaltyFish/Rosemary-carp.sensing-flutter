@@ -65,7 +65,8 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
 
   final _pages = [
     NavigatePage(),
-    PersonalInfoPage()
+    PersonalInfoPage(),
+    DataReviewPage()
     //PersonalInfoSurvey()
     //SimpleMarkerAnimationExample()
     //StudyDeploymentPage(),
@@ -90,7 +91,7 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Study'),
           BottomNavigationBarItem(icon: Icon(Icons.adb), label: 'Probes'),
-          // BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Data'),
+          BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Data'),
           //BottomNavigationBarItem(icon: Icon(Icons.watch), label: 'Devices'),
         ],
         currentIndex: _selectedIndex,
@@ -104,7 +105,7 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
     );
   }
   static ValueNotifier<double> _speed = ValueNotifier<double>(0.0);
-  static ValueNotifier<double> _time = ValueNotifier<double>(0.0);
+  static ValueNotifier<Duration> _time = ValueNotifier<Duration>(Duration(hours:0,minutes:0,seconds:0));
   static ValueNotifier<double> _gyro = ValueNotifier<double>(0.0);
   static ValueNotifier<int> _heartRate = ValueNotifier<int>(0);
   //static ValueNotifier<double> _heartRate = ValueNotifier<double>(0.0);
@@ -114,6 +115,9 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
 
   static ValueNotifier<double> _latitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.latitude);
   static ValueNotifier<double> _longitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.longitude);
+
+  bool isTimerOn = false;
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -129,9 +133,23 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
     setState(() {
       if (bloc.isRunning) {
         bloc.pause();
-      } else {
-        bloc.resume();
+        //_time.value = Duration(seconds: 0);
+        isTimerOn = false;
 
+      } else {
+
+        bloc.resume();
+        isTimerOn = true;
+
+        DateTime startTime = DateTime.now();
+        Timer.periodic(new Duration(seconds: 1), (timer) {
+            if (!isTimerOn){
+              timer.cancel();
+            }
+            else{
+              _time.value = _onTimerUpdated(startTime);
+            }
+        });
 
         //Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == SensorSamplingPackage.ACCELEROMETER).
         Sensing().controller?.data
@@ -143,6 +161,10 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
 
         Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == ContextSamplingPackage.WEATHER)
             .listen((dataPoint) => _onWeatherAcquired(dataPoint));
+
+
+
+
 
         // Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == SensorSamplingPackage.GYROSCOPE)
         //     .listen((dataPoint) => _onGyroAcquired(dataPoint));
@@ -171,8 +193,10 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
 
   void _onMoveAcquired(DataPoint data) async {
     var dataDict = data.carpBody;
-    _speed.value = dataDict!["speed"] as double;
-    _time.value = dataDict!["distance_travelled"] as double;
+    _speed.value = dataDict!["speed"]*3.6 as double;
+
+    //_time.value = dataDict!["distance_travelled"] as double;
+
   }
 
   void _onWeatherAcquired(DataPoint data) async {
@@ -188,5 +212,8 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
 
   }
 
+  Duration _onTimerUpdated(DateTime startTime) {
+    return DateTime.now().difference(startTime);
+  }
 
 }
