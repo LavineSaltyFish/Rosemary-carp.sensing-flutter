@@ -5,6 +5,8 @@ import 'package:flutter/material.dart' hide TimeOfDay;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
+import 'dart:math';
+
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:carp_serializable/carp_serializable.dart';
@@ -15,7 +17,7 @@ import 'package:carp_mobile_sensing/carp_mobile_sensing.dart';
 import 'package:carp_polar_package/carp_polar_package.dart';
 import 'package:carp_context_package/carp_context_package.dart';
 import 'package:carp_survey_package/survey.dart';
-// import 'package:research_package/research_package.dart';
+import 'package:research_package/research_package.dart';
 
 // import 'package:carp_audio_package/media.dart';
 // import 'package:carp_communication_package/communication.dart';
@@ -35,7 +37,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_animarker/flutter_map_marker_animation.dart';
 import 'package:rosemary_maps/rosemary_maps.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 part 'src/app.dart';
 part 'src/app_ios.dart';
@@ -48,6 +49,7 @@ part 'src/models/deployment_model.dart';
 part 'src/blocs/sensing_bloc.dart';
 part 'src/blocs/carp_backend.dart';
 part 'src/sensing/local_study_protocol_mananger.dart';
+
 part 'src/ui/probe_list.dart';
 part 'src/ui/device_list.dart';
 part 'src/ui/study_viz.dart';
@@ -59,8 +61,7 @@ part 'src/widgets/customized_buttons.dart';
 part 'src/ui/background_locator.dart';
 part 'src/ui/personal_info.dart';
 part 'src/ui/personal_info_survey.dart';
-part 'src/widgets/map_widget.dart';
-part 'src/ui/page_maps.dart';
+part 'src/ui/data_review.dart';
 
 void main() async {
   // makes sure to have an instance of the WidgetsBinding, which is required
