@@ -1,7 +1,4 @@
-// part of rosemary_maps;
-
-import 'package:dio/dio.dart';
-import 'maps_data_model.dart';
+part of rosemary_maps;
 
 abstract class MapService<T extends MapsDataModel> {
   final String baseUrl;

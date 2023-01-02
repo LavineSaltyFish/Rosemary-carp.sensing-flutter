@@ -48,7 +48,7 @@ class _MapScreenState extends State<MapScreen> {
                   CameraPosition(
                     target: _origin!.position,
                     zoom: 14.5,
-                    tilt: 50.0,
+                    // tilt: 50.0,
                   ),
                 ),
               ),
@@ -65,7 +65,7 @@ class _MapScreenState extends State<MapScreen> {
                   CameraPosition(
                     target: _destination!.position,
                     zoom: 14.5,
-                    tilt: 50.0,
+                    // tilt: 50.0,
                   ),
                 ),
               ),
@@ -148,11 +148,24 @@ class _MapScreenState extends State<MapScreen> {
 
                 setState(() => _info = directions);
               },
-              child: Text("GO!")
+              child: Text("Show Direction!")
           ),
           Expanded(
             child: _buildGoogleMap(),
-          )
+          ),
+          ElevatedButton(
+              onPressed: () {
+                if (_info == null) {
+                  return;
+                }
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NavigatePage()),
+                );
+              },
+              child: Text("Start Direction!")
+          ),
           // if (_info != null)
           //   Positioned(
           //     top: 20.0,

@@ -1,8 +1,4 @@
-import './google_maps.dart';
-import './maps_service.dart';
-import 'location_model.dart';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+part of rosemary_maps;
 
 class FindPlaceService extends MapService<FindPlaceModel> {
   // Singleton instance

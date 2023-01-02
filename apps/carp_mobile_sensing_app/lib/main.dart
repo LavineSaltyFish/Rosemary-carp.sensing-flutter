@@ -35,6 +35,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_animarker/flutter_map_marker_animation.dart';
 import 'package:rosemary_maps/rosemary_maps.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 part 'src/app.dart';
 part 'src/app_ios.dart';
@@ -58,6 +59,9 @@ part 'src/widgets/customized_buttons.dart';
 part 'src/ui/background_locator.dart';
 part 'src/ui/personal_info.dart';
 part 'src/ui/personal_info_survey.dart';
+part 'src/widgets/map_widget.dart';
+part 'src/ui/page_maps.dart';
+
 void main() async {
   // makes sure to have an instance of the WidgetsBinding, which is required
   // to use platform channels to call native code

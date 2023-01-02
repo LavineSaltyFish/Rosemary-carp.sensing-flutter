@@ -63,6 +63,7 @@ dependencies:
   timeago: 3.2.2
   url_launcher: 6.1.5
   flutter_animarker: ^3.2.0
+  persistent_bottom_nav_bar: ^5.0.2
 
 # Overriding carp libraries to use the local copy
 dependency_overrides:

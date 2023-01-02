@@ -4,7 +4,7 @@ part of mobile_sensing_app;
 //import 'package:google_fonts/google_fonts.dart';
 // import 'package:percent_indicator/percent_indicator.dart';
 
-class NavigatePage  extends StatefulWidget {
+class NavigatePage extends StatefulWidget {
   const NavigatePage({Key? key}) : super(key: key);
 
   @override
@@ -16,12 +16,13 @@ class _NavigatePageState extends State<NavigatePage> {
   // final googleMapsController = Completer<GoogleMapController>();
   // final scaffoldKey = GlobalKey<ScaffoldState>();
   //SystemChrome.setEnabledSystemUIOverlays([]);
-  Completer<GoogleMapController> _controller = Completer();
+  // Completer<GoogleMapController> _controller = Completer();
+  late GoogleMapController _controller;
 
   static List<LatLng> polylineCoordinates = [];
 
   static const markerDuration = Duration(seconds: 1);
-  static const markerkLocations = [
+  static const markerLocations = [
     kStartPosition,
     LatLng(18.488101, -69.957995),
     LatLng(18.489210, -69.952459),
@@ -113,10 +114,39 @@ class _NavigatePageState extends State<NavigatePage> {
                   //   )
                   // },
                   onMapCreated: (GoogleMapController controller) {
+                    _controller = controller;
+                    CarpMobileSensingAppState._latitude.addListener(() {
+                      _controller.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                              CameraPosition(
+                                target: new LatLng(
+                                    CarpMobileSensingAppState._latitude.value,
+                                    CarpMobileSensingAppState._longitude.value),
+                                zoom: 14.5,
+                                // tilt: 50.0,
+                              )
+                          )
+                      );
+                    }
+                    );
 
-                    _controller.complete(controller);}
-                  ),
-                ),
+                    CarpMobileSensingAppState._longitude.addListener(() {
+                      _controller.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                              CameraPosition(
+                                target: new LatLng(
+                                    CarpMobileSensingAppState._latitude.value,
+                                    CarpMobileSensingAppState._longitude.value),
+                                zoom: 14.5,
+                                // tilt: 50.0,
+                              )
+                          )
+                      );
+                    }
+                    );
+                  }
+              ),
+        )
               ),
               // PROGRESS  BAR
               // LinearPercentIndicator(

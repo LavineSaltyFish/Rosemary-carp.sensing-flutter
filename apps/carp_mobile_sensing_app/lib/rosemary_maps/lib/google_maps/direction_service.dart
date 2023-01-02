@@ -1,10 +1,4 @@
-// part of rosemary_maps;
-
-import './google_maps.dart';
-import './maps_service.dart';
-import 'direction_model.dart';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+part of rosemary_maps;
 
 class DirectionService extends MapService<DirectionModel> {
   // Singleton instance

@@ -31,4 +31,8 @@ class LocationManager {
   void registerListener(VoidCallback onData) {
     _curLocationNotify.addListener(onData);
   }
+
+  LatLng getValue() {
+    return _curLocationNotify.value;
+  }
 }

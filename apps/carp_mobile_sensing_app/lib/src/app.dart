@@ -63,9 +63,13 @@ class CarpMobileSensingApp extends StatefulWidget {
 class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
   int _selectedIndex = 0;
 
+  PersistentTabController _persistantTabController = PersistentTabController(initialIndex: 0);
+
   final _pages = [
     NavigatePage(),
-    PersonalInfoPage()
+    PageMaps(),
+    // MapScreen()
+    // PersonalInfoPage()
     //PersonalInfoSurvey()
     //SimpleMarkerAnimationExample()
     //StudyDeploymentPage(),
@@ -73,8 +77,8 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
     // DataVisualization(),
     // DevicesList(),
     //TestPage(),
-
   ];
+
 
   @override
   void dispose() {
@@ -82,27 +86,28 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Study'),
-          BottomNavigationBarItem(icon: Icon(Icons.adb), label: 'Probes'),
-          // BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Data'),
-          //BottomNavigationBarItem(icon: Icon(Icons.watch), label: 'Devices'),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: restart,
-        tooltip: 'Restart study & probes',
-        child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
-      ),
-    );
-  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: _pages[_selectedIndex],
+  //     bottomNavigationBar: BottomNavigationBar(
+  //       items: <BottomNavigationBarItem>[
+  //         BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Study'),
+  //         BottomNavigationBarItem(icon: Icon(Icons.adb), label: 'Probes'),
+  //         // BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Data'),
+  //         //BottomNavigationBarItem(icon: Icon(Icons.watch), label: 'Devices'),
+  //       ],
+  //       currentIndex: _selectedIndex,
+  //       onTap: _onItemTapped,
+  //     ),
+  //     floatingActionButton: FloatingActionButton(
+  //       onPressed: restart,
+  //       tooltip: 'Restart study & probes',
+  //       child: bloc.isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+  //     ),
+  //   );
+  // }
+
   static ValueNotifier<double> _speed = ValueNotifier<double>(0.0);
   static ValueNotifier<double> _time = ValueNotifier<double>(0.0);
   static ValueNotifier<double> _gyro = ValueNotifier<double>(0.0);
@@ -184,9 +189,55 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
   void _onHeartRateAcquired(DataPoint data) async {
     var dataDict = data.carpBody;
     _heartRate.value = dataDict!["hr"] as int;
-
-
   }
 
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.home),
+        title: ("Home"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.settings),
+        title: ("Navigation"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PersistentTabView(
+      context,
+      controller: _persistantTabController,
+      screens: _pages,
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: Colors.white, // Default is Colors.white.
+      handleAndroidBackButtonPress: true, // Default is true.
+      resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+      stateManagement: true, // Default is true.
+      hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        colorBehindNavBar: Colors.black,
+      ),
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: ItemAnimationProperties( // Navigation Bar's items animation properties.
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 200),
+      ),
+      navBarStyle: NavBarStyle.style1, // Choose the nav bar style with this property.
+    );
+  }
 
 }
