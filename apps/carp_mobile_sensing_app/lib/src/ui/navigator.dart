@@ -19,66 +19,18 @@ class _NavigatePageState extends State<NavigatePage> {
   // Completer<GoogleMapController> _controller = Completer();
   late GoogleMapController _controller;
 
-  static List<LatLng> polylineCoordinates = [];
-
-  static const markerDuration = Duration(seconds: 1);
-  static const markerLocations = [
-    kStartPosition,
-    LatLng(18.488101, -69.957995),
-    LatLng(18.489210, -69.952459),
-    LatLng(18.487307, -69.952759),
-    LatLng(18.487308, -69.952759),
-  ];
-  //final ValueNotifier<double> _speed = CarpMobileSensingAppState._speed
-
-
-  // static final CameraPosition _kLake = CameraPosition(
-  //     bearing: 192.8334901395799,
-  //     target: LatLng(37.43296265331129, -122.08832357078792),
-  //     tilt: 59.440717697143555,
-  //     zoom: 19.151926040649414);
-  // @override
-  // void initState() {
-  //   super.initState();
-  //
-  // }
-  // void _onMapInit(DataPoint data) async {
-  //   var dataDict = data.carpBody;
-  //   CameraPosition _kGooglePlex = CameraPosition(
-  //     target: LatLng(dataDict!["latitude"] as double, dataDict!["longitude"] as double),
-  //     zoom: 14.4746,
-  //   );
-  //
-  // }
-
    static final CameraPosition _kGooglePlex = CameraPosition(
-           target: //LatLng(37.773972, -122.431297),
-              LocationManager()._curLocationNotify.value,
-           zoom: 14.4746,
+           target: LocationManager()._curLocationNotify.value,
+           zoom: 12,
          );
-  static LatLng sourceLocation = _kGooglePlex.target;
-  static LatLng destinationLocation = _kGooglePlex.target;
-
-
-  void getPolyPoints() async{
-    PolylinePoints polylinePoints = PolylinePoints();
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        BuildSettings.mapsKey,
-        PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
-        PointLatLng(destinationLocation.latitude, destinationLocation.longitude)
-    );
-    if (result.points.isNotEmpty){
-      result.points.forEach(
-          (PointLatLng point)=>polylineCoordinates.add(LatLng(point.latitude, point.longitude))
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    setState(() { });
+
     return Scaffold(
-      bottomNavigationBar: null,
-      //key: scaffoldKey,
+      // bottomNavigationBar: null,
+      // key: scaffoldKey,
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -96,14 +48,9 @@ class _NavigatePageState extends State<NavigatePage> {
                   child :  GoogleMap(
                   mapType: MapType.hybrid,
                   initialCameraPosition: _kGooglePlex,
-                  myLocationEnabled: true,
+                  // myLocationEnabled: true,
                   markers: {
-                    Marker(
-                      markerId: MarkerId("source"),
-                      position: sourceLocation),
-                    Marker(
-                        markerId: MarkerId("destination"),
-                        position: destinationLocation)
+                    if (_curLocationMarker != null) _curLocationMarker!
                   },
                   // polylines: {
                   //   Polyline(
@@ -115,13 +62,28 @@ class _NavigatePageState extends State<NavigatePage> {
                   // },
                   onMapCreated: (GoogleMapController controller) {
                     _controller = controller;
-                    CarpMobileSensingAppState._latitude.addListener(() {
+                    BlocDataCollector._latitude.addListener(() {
+                      _controller.animateCamera(
+                        CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                              target: new LatLng(
+                                  BlocDataCollector._latitude.value,
+                                  BlocDataCollector._longitude.value),
+                              zoom: 14.5,
+                              // tilt: 50.0,
+                            )
+                        )
+                      );
+                    }
+                    );
+
+                    BlocDataCollector._longitude.addListener(() {
                       _controller.animateCamera(
                           CameraUpdate.newCameraPosition(
                               CameraPosition(
                                 target: new LatLng(
-                                    CarpMobileSensingAppState._latitude.value,
-                                    CarpMobileSensingAppState._longitude.value),
+                                    BlocDataCollector._latitude.value,
+                                    BlocDataCollector._longitude.value),
                                 zoom: 14.5,
                                 // tilt: 50.0,
                               )
@@ -130,20 +92,9 @@ class _NavigatePageState extends State<NavigatePage> {
                     }
                     );
 
-                    CarpMobileSensingAppState._longitude.addListener(() {
-                      _controller.animateCamera(
-                          CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                target: new LatLng(
-                                    CarpMobileSensingAppState._latitude.value,
-                                    CarpMobileSensingAppState._longitude.value),
-                                zoom: 14.5,
-                                // tilt: 50.0,
-                              )
-                          )
-                      );
-                    }
-                    );
+                    LocationManager()._curLocationNotify.addListener(() {
+                      setCurLocation(LocationManager().getValue());
+                    });
                   }
               ),
         )
@@ -184,7 +135,7 @@ class _NavigatePageState extends State<NavigatePage> {
                               ),
                               child: Center(
                                   child: ValueListenableBuilder(
-                                      valueListenable: CarpMobileSensingAppState._time,
+                                      valueListenable: BlocDataCollector._time,
                                       builder: (context, Duration value, child) {
                                         return Text(
                                             value.toString().split('.').first.padLeft(8, "0"),
@@ -193,9 +144,6 @@ class _NavigatePageState extends State<NavigatePage> {
                                   )
                               )
                           )),
-
-
-
               // Row 1: _speed, _heartRate, _gradient
               Row(
                     mainAxisSize: MainAxisSize.max,
@@ -220,7 +168,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                   //child: Text('0.0')
                                   child: Center(
                                       child: ValueListenableBuilder(
-                                          valueListenable: CarpMobileSensingAppState._speed,
+                                          valueListenable: BlocDataCollector._speed,
                                           builder: (context, double value, child) {
                                             return Text(
                                                 value.toStringAsFixed(2) +" km/h",
@@ -249,7 +197,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                   ),
                                   child: Center(
                                       child: ValueListenableBuilder(
-                                          valueListenable: CarpMobileSensingAppState._heartRate,
+                                          valueListenable: BlocDataCollector._heartRate,
                                           builder: (context, int value, child) {
                                             return Text(
                                                 value.toString() + " BPM",
@@ -308,7 +256,7 @@ class _NavigatePageState extends State<NavigatePage> {
                       //             textAlign: TextAlign.center);
                       //       }
                       //   ),
-                      // )
+                      // ),
                     ]
                 ),
 
@@ -336,7 +284,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                 //child: Text('0.0')
                                 child: Center(
                                     child: ValueListenableBuilder(
-                                        valueListenable: CarpMobileSensingAppState._weather,
+                                        valueListenable: BlocDataCollector._weather,
                                         builder: (context, String value, child) {
                                           return Text(
                                               value,
@@ -365,7 +313,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                 ),
                                 child: Center(
                                     child: ValueListenableBuilder(
-                                        valueListenable: CarpMobileSensingAppState._windSpeed,
+                                        valueListenable: BlocDataCollector._windSpeed,
                                         builder: (context, double value, child) {
                                           return Text(
                                               value.toStringAsFixed(2)+" km/h",
@@ -376,25 +324,64 @@ class _NavigatePageState extends State<NavigatePage> {
                             ))
                     ),
                   ]
-              )
-
-
+              ),
+              stopDirectionButton(),
             ]
           )
         )
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {
+          setState(() {
+            BlocDataCollector().toggle();
+          })
+        },
+        tooltip: 'Restart study & probes',
+        child: BlocDataCollector().isBlocRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+      ),
     );
   }
 
+  Widget stopDirectionButton() {
+    return ElevatedButton(
+        onPressed: () {
+          if (BlocDataCollector().isBlocRunning) {
+            BlocDataCollector().pause();
+          }
 
-    //final GoogleMapController controller = await _controller.future;
-    // controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+          Navigator.pop(context);
+        },
+        child: Text("Stop Direction!")
+    );
+  }
 
-    // Sensing().controller?.data
-    //     .where((dataPoint) => dataPoint.data!.format.toString() == ContextSamplingPackage.LOCATION)
-    //     .listen((event) => _onHeartRateAcquired(event));
+  Marker? _curLocationMarker;
 
+  void setCurLocation(LatLng pos) {
+    setState(() {
+      _curLocationMarker = Marker(
+        markerId: MarkerId("curLocation"),
+        infoWindow: InfoWindow(title: "curLocation"),
+        icon:
+        BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose),
+        position: pos,
+      );
+    });
 
+    setMapCamera(pos, 14);
+  }
+
+  void setMapCamera(LatLng pos, double zoom) {
+    _controller.animateCamera(
+        CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: pos,
+              zoom: zoom,
+              // tilt: 50.0,
+            )
+        )
+    );
+  }
 }
 
 

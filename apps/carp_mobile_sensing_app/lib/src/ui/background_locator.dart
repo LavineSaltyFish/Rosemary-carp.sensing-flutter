@@ -37,7 +37,9 @@ class LocationManager {
     _curLocationNotify.addListener(onData);
   }
 
-
+  LatLng getValue() {
+    return _curLocationNotify.value;
+  }
 
   //#region UTILITIES
 
