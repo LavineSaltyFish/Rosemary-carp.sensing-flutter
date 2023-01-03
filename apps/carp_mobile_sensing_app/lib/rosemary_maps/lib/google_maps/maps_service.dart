@@ -1,37 +1,31 @@
-// part of rosemary_maps;
-
-import 'package:dio/dio.dart';
-import 'maps_data_model.dart';
+part of rosemary_maps;
 
 abstract class MapService<T extends MapsDataModel> {
   final String baseUrl;
-  Map<String, dynamic> queryParameters = {};
+  late Map<String, dynamic> queryParameters;
 
   final Dio _dio = Dio();
-  MapService(String baseUrl) :
-        this.baseUrl = baseUrl;
+  MapService(this.baseUrl);
 
+
+  // null safety required for these two members
   void setQueryParams();
   T? processResponseData(dynamic data);
 
   Future<T?> run() async {
     setQueryParams();
-
-    // data is nullable
-    final data = await getResponse();
-
-    return processResponseData(data);
+    return processResponseData(await getResponse());
   }
 
   Future<dynamic> getResponse() async {
     final response = await _dio.get(
       baseUrl,
-      queryParameters: this.queryParameters,
+      queryParameters: queryParameters,
     );
 
     // Check if response is successful
-    // return (response.statusCode == 200) ? response.data : null;
-    return response.data;
+    return (response.statusCode == 200) ? response.data : null;
+    // return response.data;
   }
 }
 

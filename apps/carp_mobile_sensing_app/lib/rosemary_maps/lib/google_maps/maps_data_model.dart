@@ -1,3 +1,3 @@
-// part of rosemary_maps;
+part of rosemary_maps;
 
 abstract class MapsDataModel {}

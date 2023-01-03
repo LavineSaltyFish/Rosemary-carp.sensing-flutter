@@ -15,9 +15,18 @@ class _MapScreenState extends State<MapScreen> {
   Completer<GoogleMapController> _mapsController = Completer();
   DirectionModel? _info;
 
+  FindPlaceService _findPlaceService = FindPlaceService();
+  FindPlaceModel? _place;
+
+  TextEditingController originTextController = TextEditingController();
+  TextEditingController destTextController = TextEditingController();
+  String displayText = "";
+
   late GoogleMapController _googleMapController;
   Marker? _origin;
   Marker? _destination;
+  Marker? _originLocation;
+  Marker? _destLocation;
 
   @override
   void dispose() {
@@ -39,7 +48,7 @@ class _MapScreenState extends State<MapScreen> {
                   CameraPosition(
                     target: _origin!.position,
                     zoom: 14.5,
-                    tilt: 50.0,
+                    // tilt: 50.0,
                   ),
                 ),
               ),
@@ -56,7 +65,7 @@ class _MapScreenState extends State<MapScreen> {
                   CameraPosition(
                     target: _destination!.position,
                     zoom: 14.5,
-                    tilt: 50.0,
+                    // tilt: 50.0,
                   ),
                 ),
               ),
@@ -68,38 +77,123 @@ class _MapScreenState extends State<MapScreen> {
             )
         ],
       ),
-      body: Stack(
-        alignment: Alignment.center,
+      body: Column(
+        // alignment: Alignment.center,
         children: [
-          _buildGoogleMap(),
-          if (_info != null)
-            Positioned(
-              top: 20.0,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6.0,
-                  horizontal: 12.0,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.yellowAccent,
-                  borderRadius: BorderRadius.circular(20.0),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(0, 2),
-                      blurRadius: 6.0,
+          TextField(
+            controller: originTextController,
+            maxLines: null,
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              _findPlaceService.locationInput = originTextController.text;
+              FindPlaceModel? model = await _findPlaceService.run();
+              setState(() {
+                _origin = Marker(
+                  markerId: const MarkerId('start'),
+                  infoWindow: const InfoWindow(title: 'start'),
+                  icon:
+                  BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+                  position: model!.location,
+                );
+
+                _googleMapController.animateCamera(
+                    CameraUpdate.newCameraPosition(
+                        CameraPosition(
+                          target: _origin!.position,
+                          zoom: 14.5,
+                          tilt: 50.0,
+                        )
                     )
-                  ],
-                ),
-                child: Text(
-                  '${_info!.totalDistance}, ${_info!.totalDuration}',
-                  style: const TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
+                );
+              });
+            },
+            child: Text("Find Origin")
+          ),
+          TextField(
+            controller: destTextController,
+            maxLines: null,
+          ),
+          ElevatedButton(
+              onPressed: () async {
+                _findPlaceService.locationInput = destTextController.text;
+                FindPlaceModel? model = await _findPlaceService.run();
+                setState(() {
+                  _destination = Marker(
+                    markerId: const MarkerId('start'),
+                    infoWindow: const InfoWindow(title: 'start'),
+                    icon:
+                    BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+                    position: model!.location,
+                  );
+
+                  _googleMapController.animateCamera(
+                      CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            target: _destination!.position,
+                            zoom: 14.5,
+                            tilt: 50.0,
+                          )
+                      )
+                  );
+                });
+              },
+              child: Text("Find Destination")
+          ),
+          ElevatedButton(
+              onPressed: () async {
+                _directionService.origin = _origin!.position;
+                _directionService.destination = _destination!.position;
+                final directions = await _directionService.run();
+
+                setState(() => _info = directions);
+              },
+              child: Text("Show Direction!")
+          ),
+          Expanded(
+            child: _buildGoogleMap(),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                if (_info == null) {
+                  return;
+                }
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NavigatePage()),
+                );
+              },
+              child: Text("Start Direction!")
+          ),
+          // if (_info != null)
+          //   Positioned(
+          //     top: 20.0,
+          //     child: Container(
+          //       padding: const EdgeInsets.symmetric(
+          //         vertical: 6.0,
+          //         horizontal: 12.0,
+          //       ),
+          //       decoration: BoxDecoration(
+          //         color: Colors.yellowAccent,
+          //         borderRadius: BorderRadius.circular(20.0),
+          //         boxShadow: const [
+          //           BoxShadow(
+          //             color: Colors.black26,
+          //             offset: Offset(0, 2),
+          //             blurRadius: 6.0,
+          //           )
+          //         ],
+          //       ),
+          //       child: Text(
+          //         '${_info!.totalDistance}, ${_info!.totalDuration}',
+          //         style: const TextStyle(
+          //           fontSize: 18.0,
+          //           fontWeight: FontWeight.w600,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
