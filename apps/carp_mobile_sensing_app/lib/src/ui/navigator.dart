@@ -154,7 +154,7 @@ class _NavigatePageState extends State<NavigatePage> {
                               ),
                               child: Center(
                                   child: ValueListenableBuilder(
-                                      valueListenable: CarpMobileSensingAppState._time,
+                                      valueListenable: CarpMobileSensingAppState._timer,
                                       builder: (context, Duration value, child) {
                                         return Text(
                                             value.toString().split('.').first.padLeft(8, "0"),
@@ -163,7 +163,6 @@ class _NavigatePageState extends State<NavigatePage> {
                                   )
                               )
                           )),
-
 
 
               // Row 1: _speed, _heartRate, _gradient
@@ -251,7 +250,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                           valueListenable: LocationManager()._slopeNotify,
                                           builder: (context, double value, child) {
                                             return Text(
-                                                value.toStringAsFixed(2),
+                                                value.toStringAsFixed(2) + '°',
                                                 style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
                                                 textAlign: TextAlign.center);}
                                       )

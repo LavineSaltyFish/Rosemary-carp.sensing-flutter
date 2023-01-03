@@ -58,6 +58,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
             Measure(type: SensorSamplingPackage.PEDOMETER),
             Measure(type: SensorSamplingPackage.LIGHT),
             //Measure(type: SensorSamplingPackage.GYROSCOPE),
+            Measure(type: ContextSamplingPackage.MOBILITY),
             Measure(type: DeviceSamplingPackage.SCREEN),
             Measure(type: DeviceSamplingPackage.MEMORY),
             Measure(type: DeviceSamplingPackage.BATTERY),
@@ -75,6 +76,7 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         BackgroundTask()
           ..addMeasure(Measure(type: DeviceSamplingPackage.DEVICE)),
         phone);
+
 
     // activity measure using the phone
     // protocol.addTriggeredTask(
@@ -110,8 +112,8 @@ class LocalStudyProtocolManager implements StudyProtocolManager {
         ImmediateTrigger(),
         BackgroundTask()
           //..addMeasure(Measure(type: ContextSamplingPackage.LOCATION))
-          ..addMeasure(Measure(type: ContextSamplingPackage.GEOLOCATION))
-          ..addMeasure(Measure(type: ContextSamplingPackage.MOBILITY)),
+          ..addMeasure(Measure(type: ContextSamplingPackage.GEOLOCATION)),
+          //..addMeasure(Measure(type: ContextSamplingPackage.MOBILITY)),
         running_locationService);
 
     // Define the online weather service and add it as a 'device'

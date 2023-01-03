@@ -62,6 +62,7 @@ class CarpMobileSensingApp extends StatefulWidget {
 
 class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
   int _selectedIndex = 0;
+  //static ValueNotifier<int> _usageDays = ValueNotifier<int>(0);
 
   final _pages = [
     NavigatePage(),
@@ -77,6 +78,7 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
 
   ];
 
+
   @override
   void dispose() {
     bloc.stop();
@@ -85,6 +87,7 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -96,6 +99,7 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: restart,
@@ -105,7 +109,7 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
     );
   }
   static ValueNotifier<double> _speed = ValueNotifier<double>(0.0);
-  static ValueNotifier<Duration> _time = ValueNotifier<Duration>(Duration(hours:0,minutes:0,seconds:0));
+  static ValueNotifier<Duration> _timer = ValueNotifier<Duration>(Duration(hours:0,minutes:0,seconds:0));
   static ValueNotifier<double> _gyro = ValueNotifier<double>(0.0);
   static ValueNotifier<int> _heartRate = ValueNotifier<int>(0);
   //static ValueNotifier<double> _heartRate = ValueNotifier<double>(0.0);
@@ -116,7 +120,12 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
   static ValueNotifier<double> _latitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.latitude);
   static ValueNotifier<double> _longitude = ValueNotifier<double>(_NavigatePageState._kGooglePlex.target.longitude);
 
+
+  static ValueNotifier<double> _totalDistance = ValueNotifier<double>(0.0);
+
   bool isTimerOn = false;
+  static ValueNotifier<Duration> _totalTime = ValueNotifier<Duration>(Duration(hours:0,minutes:0,seconds:0));
+
 
 
   void _onItemTapped(int index) {
@@ -135,6 +144,7 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
         bloc.pause();
         //_time.value = Duration(seconds: 0);
         isTimerOn = false;
+        _totalTime.value += _timer.value;
 
       } else {
 
@@ -147,7 +157,7 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
               timer.cancel();
             }
             else{
-              _time.value = _onTimerUpdated(startTime);
+              _timer.value = _onTimerUpdated(startTime);
             }
         });
 
@@ -162,7 +172,8 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
         Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == ContextSamplingPackage.WEATHER)
             .listen((dataPoint) => _onWeatherAcquired(dataPoint));
 
-
+        Sensing().controller?.data.where((dataPoint) => dataPoint.data!.format.toString() == ContextSamplingPackage.MOBILITY)
+            .listen((dataPoint) => _onMobilityAcquired(dataPoint));
 
 
 
@@ -208,6 +219,13 @@ class CarpMobileSensingAppState extends State<CarpMobileSensingApp> {
   void _onHeartRateAcquired(DataPoint data) async {
     var dataDict = data.carpBody;
     _heartRate.value = dataDict!["hr"] as int;
+
+
+  }
+
+  void _onMobilityAcquired(DataPoint data) async {
+    var dataDict = data.carpBody;
+    _totalDistance.value = dataDict!["distance_travelled"] as double;
 
 
   }
