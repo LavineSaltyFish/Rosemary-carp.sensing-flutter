@@ -1,10 +1,4 @@
-// part of rosemary_maps;
-
-import './google_maps.dart';
-import './maps_service.dart';
-import 'direction_model.dart';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+part of rosemary_maps;
 
 class DirectionService extends MapService<DirectionModel> {
   // Singleton instance
@@ -26,19 +20,14 @@ class DirectionService extends MapService<DirectionModel> {
   @override
   void setQueryParams() {
     queryParameters = {
-      'origin': '${origin_latlng.latitude},${origin_latlng.longitude}',
-      'destination': '${destination_latlng.latitude},${destination_latlng.longitude}',
+      'origin': '${origin_latlng!.latitude},${origin_latlng!.longitude}',
+      'destination': '${destination_latlng!.latitude},${destination_latlng!.longitude}',
       'key': GoogleMaps.googleAPIKey,
     };
-
-    print(queryParameters);
   }
 
   @override
   DirectionModel? processResponseData(dynamic data) {
-    print("data:");
-    print(data == null);
-
-    return (data != null) ? DirectionModel.fromMap(data as Map<String, dynamic>) : null;
+    return (data == null) ? null : DirectionModel.fromMap(data as Map<String, dynamic>);
   }
 }

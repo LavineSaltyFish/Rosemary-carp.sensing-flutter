@@ -23,11 +23,7 @@ class PersonalInfoSurvey extends StatelessWidget {
         Navigator.pop(context);
       },
       onCancel: (RPTaskResult? result) {
-        // if (result == null) {
-        //   print("No result");
-        // } else
-        //   print(result);
-        // Navigator.pop(context);
+
       },
     );
   }
