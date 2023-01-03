@@ -144,6 +144,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                   )
                               )
                           )),
+                          
               // Row 1: _speed, _heartRate, _gradient
               Row(
                     mainAxisSize: MainAxisSize.max,
@@ -229,7 +230,7 @@ class _NavigatePageState extends State<NavigatePage> {
                                           valueListenable: LocationManager()._slopeNotify,
                                           builder: (context, double value, child) {
                                             return Text(
-                                                value.toStringAsFixed(2),
+                                                value.toStringAsFixed(2) + '°',
                                                 style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
                                                 textAlign: TextAlign.center);}
                                       )

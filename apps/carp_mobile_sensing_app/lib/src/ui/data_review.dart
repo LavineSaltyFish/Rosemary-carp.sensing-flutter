@@ -22,10 +22,9 @@ class _DataReviewPageState extends State<DataReviewPage> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.black,
-
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context),//.requestFocus(_unfocusNode),
+          onTap: () => FocusScope.of(context).requestFocus(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -36,167 +35,119 @@ class _DataReviewPageState extends State<DataReviewPage> {
                   'TRAVEL DATA',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: Color(0xFFF0FFF3),
+                      color: Color(0xFF9DCAED),
                       fontSize: 30,
                       fontWeight: FontWeight.w500),
-
                 ),
               ),
+
+              // total time
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                child: Container(
-                  width: 100,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: Color(0x80353938),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                  child: Stack(
+                    alignment: AlignmentDirectional(0, 0),
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        decoration: BoxDecoration(
-                          color:
-                          Color(0x353938).withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: Color(0xFFF0FFF3),
-                            width: 3,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      5, 5, 5, 5),
-                                  child: Image.network(
-                                    'https://picsum.photos/seed/738/600',
-                                    width: 30,
-                                    height: 30,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Text(
-                                  'Hello World',
-                                  //style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ],
-                            ),
-                            Text(
-                              'YOUR AVERAGE SPEED',
-                              //style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                          ],
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              color: Color(0x353938).withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(15)),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        decoration: BoxDecoration(
-                          color:
-                          Color(0x353938).withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: Color(0xFFF0FFF3),
-                            width: 3,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      5, 5, 5, 5),
-                                  child: Image.network(
-                                    'https://picsum.photos/seed/738/600',
-                                    width: 30,
-                                    height: 30,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Text(
-                                  'Hello World',
-                                  //style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ],
-                            ),
-                            Text(
-                              'YOUR TOTAL DISTANCE',
-                              //style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                          ],
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Image.asset(
+                          "assets/Subtract.png",
+                          // width: 100,
+                          // height: 150,
+                          fit: BoxFit.cover,
                         ),
                       ),
+                      Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Center(
+                              child: Column(children: [
+                                Text('Your total cycling time'),
+                                ValueListenableBuilder(
+                                  valueListenable:
+                                    CarpMobileSensingAppState._totalTime,
+                                  builder: (context, Duration value, child) {
+                                    return Text(
+                                      value
+                                          .toString()
+                                          .split('.')
+                                          .first
+                                          .padLeft(8, "0"),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w500),
+                                      textAlign: TextAlign.center);
+                                })
+                          ]))),
+                    ],
+                  )),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(10, 15, 10, 10),
+                child: Container(
+                  //width: 10,
+                  child: Stack(
+                    alignment: AlignmentDirectional(0, 0),
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              color: Color(0x353938).withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Image.asset(
+                          'assets/Subtract.png',
+                          // width: 100,
+                          // height: 150,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Column(
+                            children:[
+                            Text('Your total cycling distance:'),
+                            ValueListenableBuilder(
+                              valueListenable:
+                              CarpMobileSensingAppState._totalDistance,
+                              builder: (context, double value, child) {
+                                return Text(value.toString()+'km',
+                                    //.split('.').first.padLeft(8, "0"),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.w500),
+                                    textAlign: TextAlign.center);
+                              }),
                     ],
                   ),
                 ),
+                    ]
+                )
+                )
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
                 child: Text(
-                  'ALL TRAVELS',
-                  textAlign: TextAlign.center,
+                  'review all data...',
                   style: TextStyle(
-                      color: Color(0xFFF0FFF3),
-                      fontSize: 24,
+                      color: Color(0xFF9DCAED),
+                      fontSize: 20,
                       fontWeight: FontWeight.w500),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                  child: Container(
-                    width: 100,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Color(0x80353938),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Padding(
-                          padding:
-                          EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                          EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                          EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
               ),
             ],

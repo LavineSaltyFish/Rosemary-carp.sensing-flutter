@@ -53,20 +53,20 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         // profile photo
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, -0.2),
-                                          child: Padding(
+                                        // Align(
+                                        //   alignment:
+                                        //       AlignmentDirectional(0, -0.2),
+                                         Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     20, 15, 20, 0),
-                                            child: Image.network(
-                                              'https://picsum.photos/seed/534/600',
+                                            child: Image.asset(PersonalInfoSurvey._gender.value.toString() =='female'?
+                                            'assets/Female.png' : 'assets/Female.png',
                                               width: 100,
-                                              height: 140,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
+                                              height: 135,
+                                              fit: BoxFit.cover),
+
+                                          // ),
                                         ),
 
                                         //personal info list
@@ -75,7 +75,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 0),
+                                                    10, 0, 0, 0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -94,10 +94,10 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0, 10, 0, 10),
-                                                      child: Image.network(
-                                                        'https://picsum.photos/seed/956/600',
-                                                        width: 40,
-                                                        height: 40,
+                                                      child: Image.asset(
+                                                        'assets/genderIcon.png',
+                                                        // width: 40,
+                                                        // height: 40,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -158,10 +158,10 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0, 10, 0, 10),
-                                                      child: Image.network(
-                                                        'https://picsum.photos/seed/956/600',
-                                                        width: 40,
-                                                        height: 40,
+                                                      child: Image.asset(
+                                                        'assets/ageIcon.png',
+                                                        // width: 40,
+                                                        // height: 40,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -223,10 +223,10 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0, 10, 0, 10),
-                                                      child: Image.network(
-                                                        'https://picsum.photos/seed/956/600',
-                                                        width: 40,
-                                                        height: 40,
+                                                      child: Image.asset(
+                                                        'assets/heightIcon.png',
+                                                        // width: 40,
+                                                        // height: 40,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -273,7 +273,8 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                                                               value + ' cm',
                                                                               style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w500),
                                                                               textAlign: TextAlign.center);
-                                                                        }))))
+                                                                        }))
+                                                        ))
                                                   ],
                                                 ),
                                                 //weight
@@ -286,10 +287,10 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0, 10, 0, 10),
-                                                      child: Image.network(
-                                                        'https://picsum.photos/seed/956/600',
-                                                        width: 40,
-                                                        height: 40,
+                                                      child: Image.asset(
+                                                        'assets/weightIcon.png',
+                                                        // width: 40,
+                                                        // height: 40,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -413,33 +414,20 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                                               child: Padding(
                                                 padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 5, 0),
-                                                // child: FlutterFlowIconButton(
-                                                //   borderColor: Colors.transparent,
-                                                //   borderRadius: 30,
-                                                //   borderWidth: 1,
-                                                //   buttonSize: 60,
-                                                //   icon: Icon(
-                                                //     Icons.add,
-                                                //     color: FlutterFlowTheme
-                                                //         .of(context)
-                                                //         .primaryText,
-                                                //     size: 30,
-                                                //   ),
-                                                //   onPressed: () {
-                                                //     print('IconButton pressed ...');
-                                                //   },
+                                                    20, 0, 15, 0),
+                                                child: Image.asset(
+                                                  'assets/ticked.png',
+                                                    // width: 40,
+                                                    // height: 40,
+                                                    fit: BoxFit.cover)
                                               ),
                                             ),
                                             Text(
                                               'Consent to share data',
-                                              // style: FlutterFlowTheme
-                                              //     .of(context)
-                                              //     .bodyText1
-                                              //     .override(
-                                              //   fontFamily: 'Poppins',
-                                              //   fontSize: 20,
-                                              // ),
+                                                style: TextStyle(
+                                                    color: Color(0xFFFAEDCA),
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.w500)
                                             ),
                                           ],
                                         ),
