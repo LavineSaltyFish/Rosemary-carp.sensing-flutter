@@ -1,5 +1,5 @@
 # Rosemary-carp.sensing-flutter
-Rosemary was built on top of the CARP's demo app (see in https://github.com/LavineSaltyFish/Rosemary-carp.sensing-flutter/blob/nabilleta/README_CARP.md), with additional plugins of Google Map and live data streaming. 
+Rosemary was built on top of the CARP's demo app (see *README_CARP.md* for more information), with additional plugins of Google Map and live data streaming. 
 The path of the *main* function is in nabilleta/apps/carp_mobile_sensing_app/lib/main.dart.
 
 The architecture of Rosemary is seen below:
