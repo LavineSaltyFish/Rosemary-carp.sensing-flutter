@@ -1,0 +1,12 @@
+ParticipantId (TimeStamp),Age,Gender,Height,Weight,Exercise_level,Exercise_time(min/week),bike type,bike tire size,purpose (commute/leisure/exercise),frequency,minimum cycling time(min/week),willingness to cycle for health (1-10),app helpfulness (1-10)
+0105_1329,26,Male,175,67,Same,240,Road bike,28,"commute, leisure",3~5 *2/week 15min each,90,7,6
+0105_1457,23,Male,183,76,Same,130,Road bike,28,commute,"4~5 *2/week, 5-10min each",40,6,7
+0106_1615,29,Male,174,80,Less,60,Hybrid bike,29,"commute, leisure","3 *2/week, 10min each",60,3,3
+0107_1306,25,Male,177,82,More,360,Road bike,28,commute,"4-5 *2/week, 15min each",120,6,8
+0107_1651,25,Female,176,79,Same,360,City bike,29,"commute, leisure, exercise","3-7/week, 20min each",60,8,8
+0108_1109,25,Male,188,85,More,360,City bike,28,commute,"2/week, 30min each",60,8,7
+0108_1505,24,Female,149,38,Same,180,Road bike,28,commute,"7/week, 10min each",70,4,5
+0108_1605,26,Male,188,82,More,350,Mountain bike,28,commute,"7/week, 10min each",70,8,7
+0108_1648,25,Female,160,47,Same,240,Mountain bike,27.5,commute,"3-5 *2/week, 15min each",90,6,6
+0109_1445,26,Female,168,50,Same,240,City bike,28,commute,"5 *2/week, 15min each",150,5,8
+0109_1608,29,Male,185,80,Less,60,City bike,28,commute,"3~4 *2/week, 10min each",60,1,6
